@@ -1,0 +1,10 @@
+.section-container{
+    height: 100%;
+    min-height: 500px;
+    max-width: 1000px;
+    width: 100%;
+    background-color: #d6d3f0;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+}

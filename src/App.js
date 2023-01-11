@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import HomePage from './Pages/HomePage/HomePage';
 import LoginPage from './Pages/LoginPage/LoginPage';
+import PublicQuizzesPage from './Pages/PublicQuizzesPage/PublicQuizzesPage';
 import QuizCreationPage from './Pages/QuizCreationPage/QuizCreationPage';
 import SignupPage from './Pages/SignupPage/SignupPage';
 
@@ -14,6 +15,7 @@ function App() {
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/create-quiz' element={<QuizCreationPage/>}/>
+        <Route path='/pqp' element={<PublicQuizzesPage/>}/>
       </Routes>
       
       

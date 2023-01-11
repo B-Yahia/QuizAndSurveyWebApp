@@ -102,7 +102,7 @@ function QuizCreationPage() {
     <div>
         <div key={index}>The question is : {q.questionStatement}</div>
         <div>{q.answers.map((a,answerIndex)=>
-            <div key={answerIndex}>-{a.statement.answerStatement}</div>
+            <div key={answerIndex}>-{a.answerStatement}</div>
         )}</div>
 
     </div>   

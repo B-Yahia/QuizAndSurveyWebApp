@@ -4,3 +4,7 @@
     border: 1px solid gray;
     width: 90%;
 }
+.inpuField{
+    width: 100%;
+    margin-bottom: 10px;
+}

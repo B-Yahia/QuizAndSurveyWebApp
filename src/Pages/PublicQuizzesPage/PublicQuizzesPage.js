@@ -2,25 +2,32 @@ import { Button, Chip, Paper, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./PublicQuizzesPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const baseURL = "http://localhost:8080/quiz/getAll";
+const baseURL = "http://localhost:8080/quiz/all-quizzes";
 function PublicQuizzesPage() {
   const [eventDetails, setEventDetails] = useState([]);
+  const navigate = useNavigate();
 
-  function getEvents() {
-    axios
-      .get(baseURL)
-      .then((response) => response.data)
-      .then((data) => {
-        setEventDetails(data);
-        console.log(data);
-      });
+  async function getEvents() {
+    try {
+      const response = await axios.get(baseURL);
+      setEventDetails(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
     getEvents();
-  }, [eventDetails]);
+    console.log(eventDetails);
+  }, []);
+
+  const startSelectedQuiz = (id) => {
+    const qlink = "/quiz/" + id;
+    navigate(qlink);
+  };
 
   return (
     <div>
@@ -60,7 +67,12 @@ function PublicQuizzesPage() {
                     <div>Number of question</div>
                     <Chip label={item.questions.length} />
                   </Stack>
-                  <Button variant="contained">Start </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => startSelectedQuiz(item.quizId)}
+                  >
+                    Start{" "}
+                  </Button>
                 </Stack>
               </Paper>
             ))}

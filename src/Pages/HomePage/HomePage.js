@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Stack } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
@@ -12,34 +12,57 @@ function HomePage() {
         direction="row"
         justifyContent="space-around"
         alignItems="center"
-        className="section-container"
+        className="section-container "
       >
-        <Grid item>
+        <Grid item xs={6} className="">
           <div className="homePageTextContainer">
             <p className="homePageText">Welcome to Quiz and Survey app</p>
           </div>
         </Grid>
-        <Grid item>
-          <Grid
-            container
+        <Grid item xs={6} className="n">
+          <Stack
             direction="column"
-            justifyContent="space-between"
+            justifyContent="space-around"
             alignItems="center"
+            spacing={2}
+            className="n fwith"
           >
-            <Grid item>
-              <Link to={"/signup"}>
-                <Button>Sign up</Button>
+            <Stack
+              className="fwith n"
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              spacing={2}
+            >
+              <Link
+                to={"/signup"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                <Button variant="outlined">Sign up</Button>
               </Link>
-              <Link to={"/login"}>
-                <Button>Sign in</Button>
+              <Link
+                to={"/login"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                <Button variant="outlined">Sign in</Button>
               </Link>
-            </Grid>
-            <Grid item>
-              <Link to={"/pqp"}>
-                <Button>Take a quiz</Button>
+            </Stack>
+
+            <Stack
+              className="fwith n"
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+              spacing={2}
+            >
+              <Link
+                to={"/pqp"}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                <Button variant="contained">Take a quiz</Button>
               </Link>
-            </Grid>
-          </Grid>
+            </Stack>
+          </Stack>
         </Grid>
       </Grid>
     </div>

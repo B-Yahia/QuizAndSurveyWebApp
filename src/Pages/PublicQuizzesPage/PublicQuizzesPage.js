@@ -32,7 +32,7 @@ function PublicQuizzesPage() {
   return (
     <div>
       <Stack className="section-container" direction="column">
-        <div className="page-title"> List of the availble quizes</div>
+        <div className="page-title"> List of the available quizzes</div>
         <Stack
           direction="column"
           justifyContent="space-around"
@@ -41,7 +41,7 @@ function PublicQuizzesPage() {
         >
           {!!eventDetails &&
             eventDetails.map((item) => (
-              <Paper key={item.quizId} elevation={3}>
+              <Paper key={item.id} elevation={3}>
                 <Stack
                   direction="row"
                   justifyContent="space-around"
@@ -64,12 +64,12 @@ function PublicQuizzesPage() {
                     alignItems="center"
                     spacing={1}
                   >
-                    <div>Number of question</div>
+                    <div>Number of questions : </div>
                     <Chip label={item.questions.length} />
                   </Stack>
                   <Button
                     variant="contained"
-                    onClick={() => startSelectedQuiz(item.quizId)}
+                    onClick={() => startSelectedQuiz(item.id)}
                   >
                     Start{" "}
                   </Button>

@@ -29,8 +29,8 @@ function HomePage() {
           >
             <Stack
               className="fwith n"
-              direction="row"
-              justifyContent="space-around"
+              direction="column"
+              justifyContent="center"
               alignItems="center"
               spacing={2}
             >

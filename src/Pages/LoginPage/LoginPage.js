@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import "../CommunCss.css";
 import { Button, Stack, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const logUser = async () => {
+    const log = {
+      username: username,
+      password: password,
+    };
+
+    console.log(log);
+
+    await axios
+      .post("http://localhost:8080/auth/authenticate", log)
+      .then(function (response) {
+        console.log(response);
+        const link = "/profile/" + response.data.userId;
+        navigate(link);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <Stack
@@ -20,12 +47,24 @@ function LoginPage() {
           alignItems="stretch"
           spacing={2}
         >
-          <TextField id="outlined-basic" label="Username" variant="outlined" />
+          <TextField
+            id="outlined-basic"
+            label="Username"
+            variant="outlined"
+            onChange={(event) => {
+              setUsername(event.target.value);
+            }}
+            value={username}
+          />
           <TextField
             id="outlined-basic"
             label="Password"
             variant="outlined"
             type={"password"}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+            value={password}
           />
 
           <Stack
@@ -35,10 +74,10 @@ function LoginPage() {
             spacing={0.5}
           >
             <Link to={"/"}>
-              <Button>Create account</Button>
+              <Button>home page</Button>
             </Link>
             <Link to={"/login"}>
-              <Button>Login page</Button>
+              <Button onClick={logUser}>Login</Button>
             </Link>
           </Stack>
         </Stack>

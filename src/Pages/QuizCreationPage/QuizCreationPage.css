@@ -1,10 +1,22 @@
 .small-section{
     padding: 10px;
-    margin: 15px 0;
+    margin: 15px 10px;
     border: 1px solid gray;
     width: 90%;
 }
 .inpuField{
     width: 100%;
     margin-bottom: 10px;
+}
+.sm-sections{
+    padding: 10px;
+    width: 80%;
+    min-width: 600px;
+    margin: 15px 0;
+}
+.question-statement{
+    padding: 10px;
+    margin: 10px;
+    background-color: #ebeaf8;
+    border-radius: 10px;
 }

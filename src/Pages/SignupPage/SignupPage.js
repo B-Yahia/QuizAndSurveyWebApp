@@ -6,7 +6,7 @@ import "./SignupPage.css";
 import axios from "axios";
 
 function SignupPage() {
-  const baseURL = "http://localhost:8080/Auth/register";
+  const baseURL = "http://localhost:8080/auth/register";
   const goHome = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -21,6 +21,7 @@ function SignupPage() {
   const [usernameErr, setUsernameErr] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
+  const [success, setSuccess] = useState("");
 
   const createUser = async () => {
     setFirstNameErr("");
@@ -28,37 +29,44 @@ function SignupPage() {
     setUsernameErr("");
     setEmailErr("");
     setPasswordErr("");
-    await axios
-      .post(baseURL, {
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        password: password,
-        email: email,
-        DOB: DOB,
-      })
-      .then(function (response) {
-        console.log(response);
-        console.log(response.data);
-        setFirstName("");
-        setLastName("");
-        setUsername("");
-        setPassword("");
-        setPasswordConf("");
-        setEmail("");
-        setDOB("");
-      })
-      .catch((error) => {
-        setFirstNameErr(error.response.data.firstName);
-        setLastNameErr(error.response.data.lastName);
-        setUsernameErr(error.response.data.username);
-        setEmailErr(error.response.data.email);
-        setPasswordErr(error.response.data.password);
-        setTimeout(() => {
-          // goHome("/")
-        }, 2000);
-      });
+
+    if (password !== passwordConf) {
+      setPasswordErr("Passwords do not match");
+    } else {
+      await axios
+        .post(baseURL, {
+          firstName: firstName,
+          lastName: lastName,
+          username: username,
+          password: password,
+          email: email,
+          dateOfBirth: DOB,
+        })
+        .then(function (response) {
+          console.log(response);
+          console.log(response.data);
+          setFirstName("");
+          setLastName("");
+          setUsername("");
+          setPassword("");
+          setPasswordConf("");
+          setEmail("");
+          setDOB("");
+          setSuccess("Your account has been created successufly");
+          setTimeout(() => {
+            goHome("/");
+          }, 2000);
+        })
+        .catch((error) => {
+          setFirstNameErr(error.response.data.firstName);
+          setLastNameErr(error.response.data.lastName);
+          setUsernameErr(error.response.data.username);
+          setEmailErr(error.response.data.email);
+          setPasswordErr(error.response.data.password);
+        });
+    }
   };
+
   return (
     <div>
       <Stack
@@ -177,6 +185,11 @@ function SignupPage() {
               )}
               {passwordErr !== "" ? (
                 <Alert severity="warning">{passwordErr}</Alert>
+              ) : (
+                <></>
+              )}
+              {success !== "" ? (
+                <Alert severity="success">{success}</Alert>
               ) : (
                 <></>
               )}

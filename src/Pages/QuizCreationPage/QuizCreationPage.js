@@ -1,21 +1,23 @@
 import {
+  Alert,
   Button,
   Chip,
   FormControlLabel,
   FormGroup,
   Grid,
+  Paper,
   Stack,
   Switch,
   TextField,
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../CommunCss.css";
 import "./QuizCreationPage.css";
 
 function QuizCreationPage() {
-  const baseURL = "http://localhost:8080/quiz/create/1";
+  const baseURL = "http://localhost:8080/quiz/create/";
 
   const [title, setTitle] = useState("");
   const [desq, setDesq] = useState("");
@@ -24,6 +26,8 @@ function QuizCreationPage() {
   const [questionStatement, setQuestionStatement] = useState("");
   const [answer, setAnswer] = useState("");
   const [answersList, setAnswersList] = useState([]);
+  const params = useParams();
+  const navigate = useNavigate();
   const [question, setQuestion] = useState({
     questionStatement: "",
     answers: [],
@@ -69,13 +73,13 @@ function QuizCreationPage() {
         quizTitle: title,
         quizDescription: desq,
         questions: questionsList,
-        privateStatus: quizStatus,
+        public: quizStatus,
       };
       console.log(quiz);
       await axios
-        .post(baseURL, quiz)
+        .post(baseURL + params.id, quiz)
         .then(function (response) {
-          setErrorMsg("it worked");
+          setErrorMsg("Quiz saved");
           console.log(response);
           setAnswer("");
           setAnswersList([]);
@@ -89,11 +93,10 @@ function QuizCreationPage() {
           setQuestionsList([]);
         })
         .catch(function (error) {
-          console.log(error);
           setErrorMsg("something  went wrong");
         });
     } else {
-      setErrorMsg("The quiz can not have les than two questions");
+      setErrorMsg("The quiz can not have less than two questions");
     }
   };
 
@@ -121,10 +124,17 @@ function QuizCreationPage() {
     <div>
       <Grid className="section-container" direction="column" container>
         <Grid item>
-          <Stack justifyContent="space-evenly" direction="row">
-            <div className="page-title">Create your quiz</div>{" "}
-            <Link to={"/"}>
-              <Button>Go to home page</Button>
+          <Stack
+            direction="row"
+            justifyContent="space-around"
+            alignItems="center"
+          >
+            <div className="page-title">Create your quiz</div>
+            <Link
+              to={"/profile/" + params.id}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <Button variant="outlined">Back to profile</Button>
             </Link>
           </Stack>
         </Grid>
@@ -134,90 +144,127 @@ function QuizCreationPage() {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Stack direction="column" spacing={2} className="small-section">
-              <TextField
-                id="outlined-basic"
-                label="Quiz title"
-                variant="outlined"
-                onChange={(event) => {
-                  setTitle(event.target.value);
-                }}
-                value={title}
-              />
-              <TextField
-                id="outlined-basic"
-                label="Please write your description here"
-                variant="outlined"
-                onChange={(event) => {
-                  setDesq(event.target.value);
-                }}
-                value={desq}
-                multiline
-                minRows={2}
-              />
-              <FormGroup>
-                <FormControlLabel
-                  control={<Switch defaultChecked onChange={handleChange} />}
-                  label="Make the quiz public"
-                  labelPlacement="start"
+            <Paper className="sm-sections">
+              <Stack direction="column" spacing={2} className="small-section">
+                <TextField
+                  id="outlined-basic"
+                  label="Quiz title"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setTitle(event.target.value);
+                  }}
+                  value={title}
                 />
-              </FormGroup>
-            </Stack>
-            <Stack direction="column" spacing={4} className="small-section">
-              <div>{errorMsg}</div>
-              <TextField
-                id="outlined-basic"
-                label="Please write the question here"
-                variant="outlined"
-                onChange={(event) => {
-                  setQuestionStatement(event.target.value);
-                }}
-                value={questionStatement}
-              />
+                <TextField
+                  id="outlined-basic"
+                  label="Please write your description here"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setDesq(event.target.value);
+                  }}
+                  value={desq}
+                  multiline
+                  minRows={2}
+                />
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Switch defaultChecked onChange={handleChange} />}
+                    label="Make the quiz public"
+                    labelPlacement="start"
+                  />
+                </FormGroup>
+              </Stack>
+            </Paper>
+            <Paper className="sm-sections">
+              <Stack direction="column" spacing={4} className="small-section">
+                <div>
+                  {errorMsg === "Quiz saved" ? (
+                    <Alert variant="filled" severity="success">
+                      {errorMsg}
+                    </Alert>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <TextField
+                  id="outlined-basic"
+                  label="Please write the question here"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setQuestionStatement(event.target.value);
+                  }}
+                  value={questionStatement}
+                />
 
-              <Stack
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-                spacing={2}
-              >
-                {answersList.length === 0 ? (
-                  <div>
-                    Add the correct answer first (Please note that the answers
-                    will be shuffled )
-                  </div>
+                <Stack
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  {answersList.length === 0 ? (
+                    <div>
+                      <Alert severity="info">
+                        Add the correct answer first (Please note that the
+                        answers will be shuffled )
+                      </Alert>
+                    </div>
+                  ) : (
+                    newAnswersList
+                  )}
+                </Stack>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Grid item xs={7}>
+                    <TextField
+                      className="inpuField"
+                      id="outlined-basic"
+                      label="Answer "
+                      variant="outlined"
+                      onChange={(event) => {
+                        setAnswer(event.target.value);
+                      }}
+                      value={answer}
+                    />
+                  </Grid>
+                  {questionStatement.length <= 3 ? (
+                    <Grid item xs={4}>
+                      <Alert severity="info">Write the question first</Alert>
+                    </Grid>
+                  ) : (
+                    <Grid item xs={2}>
+                      <Button onClick={addAnswerToList}>Add the answer</Button>
+                    </Grid>
+                  )}
+                </Grid>
+                {newAnswersList.length >= 2 ? (
+                  <Button onClick={addQuestionToList} variant="outlined">
+                    add question to the list
+                  </Button>
                 ) : (
-                  newAnswersList
+                  <Button
+                    onClick={addQuestionToList}
+                    disabled
+                    variant="contained"
+                  >
+                    add question to the list
+                  </Button>
                 )}
               </Stack>
-              <Grid container>
-                <Grid item xs={8}>
-                  <TextField
-                    className="inpuField"
-                    id="outlined-basic"
-                    label="Answer "
-                    variant="outlined"
-                    onChange={(event) => {
-                      setAnswer(event.target.value);
-                    }}
-                    value={answer}
-                  />
-                </Grid>
-                <Grid item xs={3}>
-                  <Button onClick={addAnswerToList}>Add the answer</Button>
-                </Grid>
-              </Grid>
-              <Button onClick={addQuestionToList}>
-                add question to the list
-              </Button>
-            </Stack>
-            <Stack direction="column" spacing={2} className="small-section">
-              {questionsList.length == 0 ? (
-                <div>No question created yet</div>
-              ) : (
-                createdQuestions
-              )}
-            </Stack>
+            </Paper>
+            <Paper className="sm-sections">
+              <Stack direction="column" spacing={2} className="small-section">
+                {questionsList.length == 0 ? (
+                  <div>No question created yet</div>
+                ) : (
+                  createdQuestions
+                )}
+              </Stack>
+            </Paper>
             <Stack direction="column" spacing={2} className="small-section">
               <Button onClick={saveQuiz} variant="contained">
                 {" "}

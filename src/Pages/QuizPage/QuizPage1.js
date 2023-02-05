@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import {
   FormControl,
@@ -17,22 +17,19 @@ import "./QuizPage.css";
 
 function QuizPage1() {
   const callURL = "http://localhost:8080/quiz/";
-  const postURL = "http://localhost:8080//participant/create/";
-  const [inox, setInox] = useState("");
+  const postURL = "http://localhost:8080/participant/create/";
   const [msg, setMgg] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
-
   const [score, setScore] = useState(0);
   const [Index, setIndex] = useState(0);
   const [eventDetails, setEventDetails] = useState();
   const params = useParams();
-  const paramsString = params.id;
-  const baseURL = callURL + paramsString;
+  const navigate = useNavigate();
 
   async function getEvents() {
     try {
-      const response = await axios.get(baseURL);
+      const response = await axios.get(callURL + params.id);
       setEventDetails(response.data);
       console.log(response.data);
     } catch (error) {
@@ -45,17 +42,20 @@ function QuizPage1() {
       lastName: lname,
       score: score,
     };
-    try {
-      const response = await axios.post(postURL, {
-        user,
+    await axios
+      .post(postURL + params.id, user)
+      .then(function (response) {
+        console.log(response);
+        setFname("");
+        setLname("");
+        setMgg("");
+        setScore(0);
+        setIndex(0);
+        navigate("/pqp");
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-    setInox("");
-    setFname("");
-    setLname("");
   };
 
   useEffect(() => {
@@ -65,9 +65,6 @@ function QuizPage1() {
   const nextQuestion = (event) => {
     event.preventDefault();
     const theV = event.target.value;
-    setInox(theV);
-    console.log(inox);
-
     if (theV == eventDetails.questions[Index].correctAnswer.answerStatement) {
       setScore((prevScore) => prevScore + 1);
       setMgg("correct");
@@ -155,7 +152,7 @@ function QuizPage1() {
                     >
                       {eventDetails.questions[Index].answers.map((item) => (
                         <FormControlLabel
-                          key={item.answerId}
+                          key={item.id}
                           value={item.answerStatement}
                           control={<Radio />}
                           label={item.answerStatement}

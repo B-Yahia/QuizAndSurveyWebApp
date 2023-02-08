@@ -19,4 +19,12 @@
     margin: 10px;
     background-color: #ebeaf8;
     border-radius: 10px;
+    border:2px solid white;
+}
+.question-container{
+    padding: 5px 5px 15px;
+    margin: 15px;
+    background-color:#ebeaf8;
+    border-radius:15px
+
 }

@@ -1,14 +1,27 @@
-import { Chip, Divider, Paper } from "@mui/material";
+import { Button, Chip, Divider, Paper } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import QuizModal from "../../Comonents/Modal/QuizModal";
 import { quizAction } from "../../Store/createQuiz-slice";
 
 function CreateQuizStep3Component() {
   const quiz = useSelector((state) => state.quiz);
   const dispatch = useDispatch();
   const removeAnswer = (QId, AId) => {
-    dispatch(quizAction.removeAnswerfromQuestion(QId, AId));
+    const question = quiz.questions[QId];
+    const newAnswers = [...question.answers];
+    newAnswers.splice(AId, 1);
+    const newQuestion = { ...question, answers: newAnswers };
+
+    dispatch(quizAction.EditAnswerfromQuestion({ newQuestion, QId }));
+  };
+  const removeQuestionFromQuiz = (questionIndex) => {
+    dispatch(quizAction.removeQuestion(questionIndex));
+  };
+  const backToStep2 = (e) => {
+    e.preventDefault();
+    dispatch(quizAction.previousStep());
   };
 
   return (
@@ -37,8 +50,24 @@ function CreateQuizStep3Component() {
               justifyContent="space-around"
               alignItems="stretch"
               spacing={3}
+              className="question-container"
             >
-              <div className="question-statement">-{item.statement}</div>
+              <Stack
+                className="question-statement"
+                direction="row"
+                justifyContent="space-between"
+                alignItems="stretch"
+              >
+                <div>-{item.questionStatement}</div>
+                <Button
+                  color="error"
+                  size="small"
+                  variant="contained"
+                  onClick={() => removeQuestionFromQuiz(index)}
+                >
+                  remove
+                </Button>
+              </Stack>
               <Stack
                 direction="row"
                 justifyContent="space-evenly"
@@ -47,14 +76,16 @@ function CreateQuizStep3Component() {
                 {item.answers.map((answer, AnswerIndex) => (
                   <Chip
                     key={AnswerIndex}
-                    label={answer}
+                    label={answer.answerStatement}
                     onDelete={() => removeAnswer(index, AnswerIndex)}
                   />
                 ))}
+
+                <QuizModal QuestionId={index} />
               </Stack>
-              <Divider />
             </Stack>
           ))}
+          <Button onClick={backToStep2}>Add question</Button>
         </Stack>
       </Paper>
     </Stack>

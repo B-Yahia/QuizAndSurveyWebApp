@@ -12,21 +12,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { quizAction } from "../../Store/createQuiz-slice";
 
 function CreateQuizStep2Component() {
-  const [questionStatement, setQuestionStatement] = useState("bqwdkwjlk");
-  const [answer, setAnswer] = useState("dnwl;dlwk");
+  const [questionStatement, setQuestionStatement] = useState("");
+  const [answer, setAnswer] = useState("");
   const [answersList, setAnswersList] = useState([]);
   const dispatch = useDispatch();
   const newQuiz = useSelector((state) => state.quiz);
 
   const addToAnswersList = (e) => {
     e.preventDefault();
-    answersList.push(answer);
+    const newAnswer = {
+      answerStatement: answer,
+    };
+    answersList.push(newAnswer);
     setAnswer("");
   };
   const addQuestionToList = (e) => {
     e.preventDefault();
     const newQuestion = {
-      statement: questionStatement,
+      questionStatement: questionStatement,
       answers: answersList,
     };
     dispatch(quizAction.addQuestion({ newQuestion }));
@@ -59,7 +62,6 @@ function CreateQuizStep2Component() {
           <Grid item xs={8}>
             <TextField
               fullWidth
-              id="outlined-basic"
               label="Please write the answer here"
               variant="outlined"
               onChange={(event) => {
@@ -80,7 +82,7 @@ function CreateQuizStep2Component() {
           alignItems="center"
         >
           {answersList.map((answer, index) => (
-            <Chip key={index} label={answer} />
+            <Chip key={index} label={answer.answerStatement} />
           ))}
         </Stack>
         <Divider />

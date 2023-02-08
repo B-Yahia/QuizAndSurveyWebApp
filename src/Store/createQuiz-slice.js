@@ -24,17 +24,23 @@ const newQuiz = createSlice({
     },
     addQuestion(state, action) {
       const newQuestion = {
-        statement: action.payload.newQuestion.statement,
+        questionStatement: action.payload.newQuestion.questionStatement,
         answers: action.payload.newQuestion.answers,
       };
 
       state.questions.push(newQuestion);
     },
-    removeQuestion(state, action) {},
-    removeAnswerfromQuestion(state, action) {
-      const questionId = action.payload.QId;
-      const answerId = action.payload.AId;
-      state.questions.splice(questionId, 1);
+    removeQuestion(state, action) {
+      state.questions.splice(state.payload, 1);
+    },
+    EditAnswerfromQuestion(state, action) {
+      const index = action.payload.QId;
+
+      const updatedQuestion = {
+        questionStatement: action.payload.newQuestion.questionStatement,
+        answers: action.payload.newQuestion.answers,
+      };
+      state.questions.splice(index, 1, updatedQuestion);
     },
   },
 });

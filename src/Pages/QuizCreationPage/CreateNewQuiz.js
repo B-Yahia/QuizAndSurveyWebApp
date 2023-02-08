@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Button } from "@mui/material";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -11,21 +11,45 @@ import "./QuizCreationPage.css";
 
 function CreateNewQuiz() {
   const baseURL = "http://localhost:8080/quiz/create/";
+  const newQuiz = useSelector((state) => state.quiz);
   const params = useParams();
 
-  // const saveQuiz = async () => {
-  //   await axios
-  //     .post(baseURL + params.id, newQuiz)
-  //     .then(function (response) {})
-  //     .catch(function (error) {
-  //       console.log(error);
-  //       setErrorMsg("something  went wrong");
-  //     });
-  // };
+  const saveQuiz = async (e) => {
+    e.preventDefault();
+    console.log(newQuiz);
+    await axios
+      .post(baseURL + params.id, newQuiz)
+      .then(function (response) {
+        console.log(response);
+        console.log("first");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   const state = useSelector((state) => state.quiz.step);
   return (
     <div>
-      <Stack className="section-container">
+      <Stack
+        className="section-container"
+        direction="column"
+        justifyContent="space-between"
+        alignItems="stretch"
+        spacing={2}
+      >
+        <Stack
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center"
+        >
+          <div className="page-title">Create your quiz</div>
+          <Link
+            to={"/profile/" + params.id}
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            <Button variant="outlined">Back to profile</Button>
+          </Link>
+        </Stack>
         {(() => {
           switch (state) {
             case 1:
@@ -38,6 +62,7 @@ function CreateNewQuiz() {
               return null;
           }
         })()}
+        {newQuiz.step === 3 && <Button onClick={saveQuiz}>saved</Button>}
       </Stack>
     </div>
   );

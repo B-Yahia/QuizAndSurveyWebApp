@@ -14,21 +14,16 @@ import SignupPage from "./Pages/SignupPage/SignupPage";
 function App() {
   return (
     <div className="App">
-      <Stack
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="center"
-        className="brd"
-      >
+      <Stack direction="column" justifyContent="flex-start" alignItems="center">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/create-quiz/:id" element={<QuizCreationPage />} />
+          <Route path="/create" element={<QuizCreationPage />} />
           <Route path="/pqp" element={<PublicQuizzesPage />} />
           <Route path="/quiz/:id" element={<QuizPage1 />} />
           <Route path="/profile/:id" element={<ProfilePage />} />
-          <Route path="/new" element={<CreateNewQuiz />} />
+          <Route path="/create-quiz/:id" element={<CreateNewQuiz />} />
         </Routes>
       </Stack>
     </div>

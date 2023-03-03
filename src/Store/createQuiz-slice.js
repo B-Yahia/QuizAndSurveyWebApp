@@ -3,18 +3,21 @@ import { createSlice } from "@reduxjs/toolkit";
 const newQuiz = createSlice({
   name: "quiz",
   initialState: {
-    quizTitle: "",
-    quizDescription: "",
+    title: "",
+    description: "",
+    category: "",
+    tags: [],
     questions: [],
     public: true,
+    available: true,
     step: 1,
   },
   reducers: {
     addTitleAndDesc(state, action) {
-      const newtitle = action.payload.title;
-      const newDesq = action.payload.desq;
-      state.quizTitle = newtitle;
-      state.quizDescription = newDesq;
+      state.title = action.payload.title;
+      state.description = action.payload.desq;
+      state.category = action.payload.category;
+      state.tags = action.payload.tags;
     },
     nextStep(state, action) {
       state.step++;
@@ -24,8 +27,9 @@ const newQuiz = createSlice({
     },
     addQuestion(state, action) {
       const newQuestion = {
-        questionStatement: action.payload.newQuestion.questionStatement,
+        statement: action.payload.newQuestion.questionStatement,
         answers: action.payload.newQuestion.answers,
+        correctAnswer: action.payload.newQuestion.correctAnswer,
       };
 
       state.questions.push(newQuestion);
@@ -37,10 +41,18 @@ const newQuiz = createSlice({
       const index = action.payload.QId;
 
       const updatedQuestion = {
-        questionStatement: action.payload.newQuestion.questionStatement,
+        statement: action.payload.newQuestion.statement,
         answers: action.payload.newQuestion.answers,
+        correctAnswer: action.payload.newQuestion.correctAnswer,
       };
       state.questions.splice(index, 1, updatedQuestion);
+    },
+    cleanQuizEntity(state, action) {
+      state.tite = "";
+      state.description = "";
+      state.category = "";
+      state.questions = [];
+      state.step = 1;
     },
   },
 });

@@ -1,9 +1,12 @@
 .App {
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #ebeaf8;
 }
 .brd{
   height: 100%;
   overflow:scroll;
+}
+.container{
+  padding-top:5%;
 }

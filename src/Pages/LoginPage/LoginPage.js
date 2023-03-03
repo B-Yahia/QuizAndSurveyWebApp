@@ -17,16 +17,16 @@ function LoginPage() {
       password: password,
     };
 
-    console.log(log);
-
     await axios
-      .post("http://localhost:8080/auth/authenticate", log)
+      .post("http://localhost:8080/auth/login", log)
       .then(function (response) {
         console.log(response);
-        const link = "/profile/" + response.data.userId;
-        navigate(link);
+        const userId = response.data.id;
+        localStorage.setItem("userId", userId);
+        navigate("/profile");
       })
       .catch((error) => {
+        console.log("first");
         console.log(error);
       });
   };

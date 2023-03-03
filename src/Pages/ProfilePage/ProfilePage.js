@@ -2,25 +2,28 @@ import { Button, Stack } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import UserDetails from "./UserDetails";
-import UserQuizzes from "./UserQuizzes";
+import LogoutButton from "../../Comonents/Buttons/LogoutButton";
+import UserDetails from "../../Comonents/ProfileComponenets/UserDetails";
+import UserQuizzes from "../../Comonents/ProfileComponenets/UserQuizzes";
 
 function ProfilePage() {
   const baseURL = "http://localhost:8080/user/";
-  const baseURL2 = "http://localhost:8080/quiz/userQuizzes/";
+  const baseURL2 = "http://localhost:8080/quiz/user/";
   const [eventDetails, setEventDetails] = useState();
   const [eventDetails2, setEventDetails2] = useState();
 
   const params = useParams();
-  const navigate = useNavigate();
 
   async function getEvents() {
+    const userId = localStorage.getItem("userId");
+
     try {
       axios
-        .all([axios.get(baseURL + params.id), axios.get(baseURL2 + params.id)])
+        .all([axios.get(baseURL + userId), axios.get(baseURL2 + userId)])
         .then(
           axios.spread((response1, response2) => {
             setEventDetails(response1.data);
+            console.log(response2.data);
             setEventDetails2(response2.data);
           })
         );
@@ -32,11 +35,6 @@ function ProfilePage() {
   useEffect(() => {
     getEvents();
   }, []);
-
-  const removeTokenFromLocalStorage = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
 
   return (
     <div>
@@ -53,7 +51,7 @@ function ProfilePage() {
           alignItems="center"
         >
           <div className="page-title">Profile Page</div>
-          <Button onClick={removeTokenFromLocalStorage}>Logout</Button>
+          <LogoutButton />
         </Stack>
         {!!eventDetails && (
           <UserDetails
@@ -70,7 +68,7 @@ function ProfilePage() {
         >
           <div className="page-title">List of quizzes created by me</div>
           <Link
-            to={"/create-quiz/" + params.id}
+            to={"/create-quiz"}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             <Button variant="contained" size="small">
@@ -81,12 +79,15 @@ function ProfilePage() {
         {!!eventDetails2 &&
           eventDetails2.map((item) => (
             <UserQuizzes
+              key={item.id}
               id={item.id}
-              title={item.quizTitle}
+              title={item.title}
               nmQuestions={item.questions.length}
               nmParticipants={item.participantList.length}
-              desc={item.quizDescription}
+              participants={item.participantList}
+              desc={item.description}
               questions={item.questions}
+              isPublic={item.public}
             />
           ))}
       </Stack>

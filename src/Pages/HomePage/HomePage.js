@@ -5,6 +5,8 @@ import "./HomePage.css";
 import "../CommunCss.css";
 
 function HomePage() {
+  const userId = localStorage.getItem("userId");
+  console.log(userId);
   return (
     <div>
       <Grid
@@ -40,12 +42,21 @@ function HomePage() {
               >
                 <Button variant="outlined">Sign up</Button>
               </Link>
-              <Link
-                to={"/login"}
-                style={{ color: "inherit", textDecoration: "inherit" }}
-              >
-                <Button variant="outlined">Sign in</Button>
-              </Link>
+              {userId ? (
+                <Link
+                  to={"/profile"}
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                  <Button variant="outlined">Go to profile</Button>{" "}
+                </Link>
+              ) : (
+                <Link
+                  to={"/login"}
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                  <Button variant="outlined">Sign in</Button>
+                </Link>
+              )}
             </Stack>
 
             <Stack

@@ -1,5 +1,7 @@
 import {
+  Autocomplete,
   Button,
+  Chip,
   FormControlLabel,
   FormGroup,
   Paper,
@@ -10,21 +12,69 @@ import {
 import { quizAction } from "../../Store/createQuiz-slice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import WarningMessage from "../WarningMessageComponent/WarningMessage";
 
 function CreateQuizStep1Component() {
   const [title, setTitle] = useState("");
   const [desq, setDesq] = useState("");
   const [quizStatus, setQuizStatus] = useState(true);
   const newQuiz = useSelector((state) => state.quiz);
-  //   setTitle(newQuiz.quizTitle);
-  //   setDesq(newQuiz.quizDescription);
+  const [category, setCategory] = useState("");
+  const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState("");
+  const [warningMsg, setWarningMsg] = useState("");
+
+  const quizTopics = [
+    "General Knowledge",
+    "History",
+    "Geography",
+    "Science",
+    "Mathematics",
+    "Literature",
+    "Music",
+    "Sports",
+    "Art",
+    "Movies and TV",
+    "Technology",
+    "Politics",
+    "Animals",
+    "Food and Drink",
+    "Fashion",
+    "Business and Finance",
+    "Environment",
+    "Social Issues",
+    "Travel",
+    "Languages",
+    "Humanities",
+    "Mythology",
+    "Philosophy",
+    "Religion",
+    "Pop Culture",
+  ];
 
   const dispatch = useDispatch();
   const saveStep1 = () => {
-    dispatch(quizAction.addTitleAndDesc({ title, desq }));
+    dispatch(quizAction.addTitleAndDesc({ title, desq, category, tags }));
     setDesq("");
     setTitle("");
     dispatch(quizAction.nextStep());
+  };
+  const addTagToList = (event) => {
+    event.preventDefault();
+    if (tag.length >= 1) {
+      const newTag = tag;
+      setTags([...tags, newTag]);
+      console.log(tags);
+      setTag("");
+    } else {
+      setWarningMsg("The tag can not be empty");
+    }
+  };
+  const handleKeyDown = (event) => {
+    setWarningMsg("");
+    if (event.key === "Enter") {
+      addTagToList(event);
+    }
   };
 
   const handleStatusChange = (e) => {
@@ -43,6 +93,33 @@ function CreateQuizStep1Component() {
           }}
           value={title}
         />
+
+        <Autocomplete
+          value={category}
+          onChange={(event, newValue) => {
+            setCategory(newValue);
+          }}
+          options={quizTopics}
+          renderInput={(params) => (
+            <TextField {...params} label="Quiz category" />
+          )}
+        />
+        <TextField
+          fullWidth
+          label="Please write the Tags here"
+          variant="outlined"
+          onKeyDown={handleKeyDown}
+          onChange={(event) => {
+            setTag(event.target.value);
+          }}
+          value={tag}
+        />
+        <Stack direction="row" justifyContent="start" alignItems="center">
+          {tags.map((tagOption, index) => (
+            <Chip key={index} label={tagOption} />
+          ))}
+        </Stack>
+        {warningMsg.length >= 1 ? <WarningMessage msg={warningMsg} /> : <></>}
         <TextField
           id="outlined-basic"
           label="Please write your description here"
@@ -54,12 +131,17 @@ function CreateQuizStep1Component() {
           multiline
           minRows={2}
         />
+
         <Stack
           direction="row-reverse"
           justifyContent="space-around"
           alignItems="flex-end"
         >
-          <Button onClick={saveStep1}>Next</Button>
+          {title.length != 0 && category != "" ? (
+            <Button onClick={saveStep1}>Next</Button>
+          ) : (
+            <></>
+          )}
           {quizStatus ? (
             <FormGroup>
               <FormControlLabel

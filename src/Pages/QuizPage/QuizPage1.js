@@ -17,7 +17,7 @@ import "./QuizPage.css";
 
 function QuizPage1() {
   const callURL = "http://localhost:8080/quiz/";
-  const postURL = "http://localhost:8080/participant/create/";
+  const postURL = "http://localhost:8080/participant/add/";
   const [msg, setMgg] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -65,7 +65,7 @@ function QuizPage1() {
   const nextQuestion = (event) => {
     event.preventDefault();
     const theV = event.target.value;
-    if (theV == eventDetails.questions[Index].correctAnswer.answerStatement) {
+    if (theV == eventDetails.questions[Index].correctAnswer.statement) {
       setScore((prevScore) => prevScore + 1);
       setMgg("correct");
       if (Index < eventDetails.questions.length - 1) {
@@ -135,12 +135,12 @@ function QuizPage1() {
           <div>
             {!!eventDetails && (
               <div>
-                <div>{eventDetails.quizTitle}</div>
-                <div>{eventDetails.quizDescription}</div>
+                <div>{eventDetails.title}</div>
+                <div>{eventDetails.description}</div>
                 <Paper className="question" elevation={3}>
                   <FormControl>
                     <FormLabel id="demo-controlled-radio-buttons-group">
-                      {eventDetails.questions[Index].questionStatement}
+                      {eventDetails.questions[Index].statement}
                     </FormLabel>
                     <RadioGroup
                       className="radio-group"
@@ -153,9 +153,9 @@ function QuizPage1() {
                       {eventDetails.questions[Index].answers.map((item) => (
                         <FormControlLabel
                           key={item.id}
-                          value={item.answerStatement}
+                          value={item.statement}
                           control={<Radio />}
-                          label={item.answerStatement}
+                          label={item.statement}
                         />
                       ))}
                     </RadioGroup>

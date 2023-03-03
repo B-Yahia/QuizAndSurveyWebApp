@@ -1,27 +1,32 @@
 import { Stack, Button } from "@mui/material";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { quizAction } from "../../Store/createQuiz-slice";
 
 import "../CommunCss.css";
-import CreateQuizStep1Component from "./CreateQuizStep1Component";
-import CreateQuizStep2Component from "./CreateQuizStep2Component";
-import CreateQuizStep3Component from "./CreateQuizStep3Component";
+import CreateQuizStep1Component from "../../Comonents/QuizCreationSteps/CreateQuizStep1Component";
+import CreateQuizStep2Component from "../../Comonents/QuizCreationSteps/CreateQuizStep2Component";
+import CreateQuizStep3Component from "../../Comonents/QuizCreationSteps/CreateQuizStep3Component";
 import "./QuizCreationPage.css";
 
 function CreateNewQuiz() {
-  const baseURL = "http://localhost:8080/quiz/create/";
+  const baseURL = "http://localhost:8080/quiz/add/";
   const newQuiz = useSelector((state) => state.quiz);
-  const params = useParams();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const saveQuiz = async (e) => {
     e.preventDefault();
+    const userId = localStorage.getItem("userId");
     console.log(newQuiz);
     await axios
-      .post(baseURL + params.id, newQuiz)
+      .post(baseURL + userId, newQuiz)
       .then(function (response) {
         console.log(response);
-        console.log("first");
+        dispatch(quizAction.cleanQuizEntity());
+        navigate("/profile");
       })
       .catch(function (error) {
         console.log(error);
@@ -44,7 +49,7 @@ function CreateNewQuiz() {
         >
           <div className="page-title">Create your quiz</div>
           <Link
-            to={"/profile/" + params.id}
+            to={"/profile"}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             <Button variant="outlined">Back to profile</Button>

@@ -2,7 +2,7 @@ import { Button, Chip, Divider, Paper } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import QuizModal from "../../Comonents/Modal/QuizModal";
+import QuizModal from "../Modal/QuizModal";
 import { quizAction } from "../../Store/createQuiz-slice";
 
 function CreateQuizStep3Component() {
@@ -37,8 +37,8 @@ function CreateQuizStep3Component() {
           justifyContent="space-between"
           alignItems="stretch"
         >
-          <div>{quiz.quizTitle}</div>
-          <div>{quiz.quizDescription}</div>
+          <div>{quiz.title}</div>
+          <div>{quiz.description}</div>
         </Stack>
       </Paper>
       <Paper>
@@ -58,7 +58,7 @@ function CreateQuizStep3Component() {
                 justifyContent="space-between"
                 alignItems="stretch"
               >
-                <div>-{item.questionStatement}</div>
+                <div>-{item.statement}</div>
                 <Button
                   color="error"
                   size="small"
@@ -76,7 +76,7 @@ function CreateQuizStep3Component() {
                 {item.answers.map((answer, AnswerIndex) => (
                   <Chip
                     key={AnswerIndex}
-                    label={answer.answerStatement}
+                    label={answer.statement}
                     onDelete={() => removeAnswer(index, AnswerIndex)}
                   />
                 ))}

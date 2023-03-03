@@ -25,7 +25,7 @@ function QuizModal(props) {
   const addAnswer = () => {
     const question = quiz.questions[props.QuestionId];
     const newAnswers = [...question.answers];
-    newAnswers.push({ answerStatement: answer });
+    newAnswers.push({ statement: answer });
     const QId = props.QuestionId;
     const newQuestion = { ...question, answers: newAnswers };
     console.log(newQuestion);

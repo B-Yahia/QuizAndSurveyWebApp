@@ -4,7 +4,7 @@ import axios from "axios";
 import "./PublicQuizzesPage.css";
 import { Link, useNavigate } from "react-router-dom";
 
-const baseURL = "http://localhost:8080/quiz/all-quizzes";
+const baseURL = "http://localhost:8080/quiz/all";
 function PublicQuizzesPage() {
   const [eventDetails, setEventDetails] = useState([]);
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ function PublicQuizzesPage() {
                     spacing={1}
                   >
                     <div>Title</div>
-                    <Chip label={item.quizTitle} />
+                    <Chip label={item.title} />
                   </Stack>
                   <Stack
                     direction="row"

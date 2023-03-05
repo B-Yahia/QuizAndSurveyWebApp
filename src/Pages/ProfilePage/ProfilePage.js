@@ -51,7 +51,15 @@ function ProfilePage() {
           alignItems="center"
         >
           <div className="page-title">Profile Page</div>
-          <LogoutButton />
+          <>
+            <LogoutButton />
+            <Link
+              to={"/"}
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <Button variant="outlined">home page</Button>
+            </Link>
+          </>
         </Stack>
         {!!eventDetails && (
           <UserDetails

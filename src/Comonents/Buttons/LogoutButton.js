@@ -8,7 +8,11 @@ function LogoutButton() {
     localStorage.removeItem("userId");
     navigate("/");
   };
-  return <Button onClick={logoutFunction}>Logout</Button>;
+  return (
+    <Button variant="outlined" onClick={logoutFunction}>
+      Logout
+    </Button>
+  );
 }
 
 export default LogoutButton;

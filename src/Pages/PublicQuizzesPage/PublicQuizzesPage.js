@@ -1,80 +1,94 @@
-import { Button, Chip, Paper, Stack } from "@mui/material";
+import {
+  Autocomplete,
+  Pagination,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./PublicQuizzesPage.css";
-import { Link, useNavigate } from "react-router-dom";
+import QuizCard from "../../Comonents/PublicQuizPageComponent/QuizCard";
 
-const baseURL = "http://localhost:8080/quiz/all";
+const options = [4, 5, 6, , 8, 10];
 function PublicQuizzesPage() {
+  const baseURL = "http://localhost:8080/quiz/all";
   const [eventDetails, setEventDetails] = useState([]);
-  const navigate = useNavigate();
+  const [limitpage, setLimitPage] = useState();
+  const [responseDetails, setResponseDetails] = useState();
+  const [page, setPage] = useState(1);
+  const paginationURL = "http://localhost:8080/quiz/pagination/";
+  const [value, setValue] = useState(options[0]);
 
-  async function getEvents() {
+  async function getEventsWithPagination() {
+    const newPage = page - 1;
+    const pagination = paginationURL + newPage + "/4";
+    console.log(pagination);
     try {
-      const response = await axios.get(baseURL);
-      setEventDetails(response.data);
+      const response = await axios.get(paginationURL + newPage + "/" + value);
+      setResponseDetails(response.data);
+
+      setLimitPage(response.data.totalPages);
+      console.log(limitpage);
+
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   }
 
-  useEffect(() => {
-    getEvents();
-    console.log(eventDetails);
-  }, []);
-
-  const startSelectedQuiz = (id) => {
-    const qlink = "/quiz/" + id;
-    navigate(qlink);
+  const handleChange = (event, value) => {
+    event.preventDefault();
+    setPage(value);
   };
+
+  useEffect(() => {
+    getEventsWithPagination();
+  }, [value]);
 
   return (
     <div>
-      <Stack className="section-container" direction="column">
+      <Stack
+        className="section-container"
+        direction="column"
+        justifyContent="space-around"
+        alignItems="stretch"
+        spacing={2}
+      >
         <div className="page-title"> List of the available quizzes</div>
+        <Stack
+          direction="row-reverse"
+          justifyContent="space-around"
+          alignItems="center"
+        >
+          <Autocomplete
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            id="controllable-states-demo"
+            options={options}
+            size="small"
+            sx={{ width: 100 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Number of quizzes per page" />
+            )}
+          />
+
+          {!!limitpage && (
+            <Pagination count={limitpage} page={page} onChange={handleChange} />
+          )}
+        </Stack>
+
         <Stack
           direction="column"
           justifyContent="space-around"
           alignItems="center"
           spacing={3}
         >
-          {!!eventDetails &&
-            eventDetails.map((item) => (
-              <Paper key={item.id} elevation={3}>
-                <Stack
-                  direction="row"
-                  justifyContent="space-around"
-                  alignItems="center"
-                  spacing={2}
-                  className="questionCard"
-                >
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={1}
-                  >
-                    <div>Title</div>
-                    <Chip label={item.title} />
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    spacing={1}
-                  >
-                    <div>Number of questions : </div>
-                    <Chip label={item.questions.length} />
-                  </Stack>
-                  <Button
-                    variant="contained"
-                    onClick={() => startSelectedQuiz(item.id)}
-                  >
-                    Start{" "}
-                  </Button>
-                </Stack>
-              </Paper>
+          {!!responseDetails &&
+            responseDetails.content.map((item) => (
+              <QuizCard item={item} key={item.id} />
             ))}
         </Stack>
       </Stack>

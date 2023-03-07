@@ -10,14 +10,15 @@ import axios from "axios";
 import "./PublicQuizzesPage.css";
 import QuizCard from "../../Comonents/PublicQuizPageComponent/QuizCard";
 
-const options = [4, 5, 6, , 8, 10];
+const options = ["4", "5", "6", , "8", "10"];
 function PublicQuizzesPage() {
-  const baseURL = "http://localhost:8080/quiz/all";
+  const baseURL = "http://quizsurveyapp-production.up.railway.app/quiz/all";
   const [eventDetails, setEventDetails] = useState([]);
   const [limitpage, setLimitPage] = useState();
   const [responseDetails, setResponseDetails] = useState();
   const [page, setPage] = useState(1);
-  const paginationURL = "http://localhost:8080/quiz/pagination/";
+  const paginationURL =
+    "http://quizsurveyapp-production.up.railway.app/quiz/pagination/";
   const [value, setValue] = useState(options[0]);
 
   async function getEventsWithPagination() {
@@ -44,7 +45,7 @@ function PublicQuizzesPage() {
 
   useEffect(() => {
     getEventsWithPagination();
-  }, [value]);
+  }, [value, page]);
 
   return (
     <div>

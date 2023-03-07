@@ -18,7 +18,7 @@ function LoginPage() {
     };
 
     await axios
-      .post("http://localhost:8080/auth/login", log)
+      .post("http://quizsurveyapp-production.up.railway.app/auth/login", log)
       .then(function (response) {
         console.log(response);
         const userId = response.data.id;

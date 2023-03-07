@@ -7,28 +7,32 @@ import UserDetails from "../../Comonents/ProfileComponenets/UserDetails";
 import UserQuizzes from "../../Comonents/ProfileComponenets/UserQuizzes";
 
 function ProfilePage() {
-  const baseURL = "http://localhost:8080/user/";
-  const baseURL2 = "http://localhost:8080/quiz/user/";
+  const baseURL = "http://quizsurveyapp-production.up.railway.app/user/";
+  const baseURL2 = "http://quizsurveyapp-production.up.railway.app/quiz/user/";
   const [eventDetails, setEventDetails] = useState();
   const [eventDetails2, setEventDetails2] = useState();
+  const navigate = useNavigate();
 
   const params = useParams();
 
   async function getEvents() {
     const userId = localStorage.getItem("userId");
-
-    try {
-      axios
-        .all([axios.get(baseURL + userId), axios.get(baseURL2 + userId)])
-        .then(
-          axios.spread((response1, response2) => {
-            setEventDetails(response1.data);
-            console.log(response2.data);
-            setEventDetails2(response2.data);
-          })
-        );
-    } catch (error) {
-      console.error(error);
+    if (userId) {
+      try {
+        axios
+          .all([axios.get(baseURL + userId), axios.get(baseURL2 + userId)])
+          .then(
+            axios.spread((response1, response2) => {
+              setEventDetails(response1.data);
+              console.log(response2.data);
+              setEventDetails2(response2.data);
+            })
+          );
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      navigate("/");
     }
   }
 

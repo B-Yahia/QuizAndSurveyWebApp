@@ -16,8 +16,9 @@ import {
 import "./QuizPage.css";
 
 function QuizPage1() {
-  const callURL = "http://localhost:8080/quiz/";
-  const postURL = "http://localhost:8080/participant/add/";
+  const callURL = "http://quizsurveyapp-production.up.railway.app/quiz/";
+  const postURL =
+    "http://quizsurveyapp-production.up.railway.app/participant/add/";
   const [msg, setMgg] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");

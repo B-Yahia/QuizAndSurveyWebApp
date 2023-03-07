@@ -6,7 +6,8 @@ import "./SignupPage.css";
 import axios from "axios";
 
 function SignupPage() {
-  const baseURL = "http://localhost:8080/auth/register";
+  const baseURL =
+    "http://quizsurveyapp-production.up.railway.app/auth/register";
   const goHome = useNavigate();
 
   const [firstName, setFirstName] = useState("");

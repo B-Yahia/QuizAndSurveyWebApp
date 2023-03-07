@@ -57,50 +57,59 @@ function UserQuizzes({
         <AccordionSummary>
           <Stack
             direction="row"
-            justifyContent="space-around"
+            justifyContent="space-between"
             alignItems="center"
-            spacing={2}
+            width="100%"
           >
-            <Stack direction="column">
-              <div>Title :</div>
-              <div>{title}</div>
-            </Stack>
-            <Stack direction="column">
-              <div>Num of questions :</div>
-              <div>{nmQuestions}</div>
-            </Stack>
-            <Stack direction="column">
-              <div>num of particpant :</div>
-              <div>{nmParticipants}</div>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              spacing={3}
+            >
+              <Stack direction="column">
+                <div>Title :</div>
+                <div className="small-text">{title}</div>
+              </Stack>
+              <Stack direction="column">
+                <div className="small-text">Num of questions :</div>
+                <div>{nmQuestions}</div>
+              </Stack>
+              <Stack direction="column">
+                <div className="small-text">num of particpant :</div>
+                <div>{nmParticipants}</div>
+              </Stack>
             </Stack>
             <Divider orientation="vertical" flexItem />
-            <Button
-              onClick={(event) => removeQuiz(event, id)}
-              variant="contained"
-              size="small"
-              color="error"
-            >
-              Remove
-            </Button>
-            {isPublic ? (
+            <Stack direction="column" spacing={1}>
               <Button
-                onClick={(event) => publishQuiz(event, id)}
+                onClick={(event) => removeQuiz(event, id)}
                 variant="contained"
                 size="small"
-                color="warning"
+                color="error"
               >
-                Unpublish
+                Remove
               </Button>
-            ) : (
-              <Button
-                onClick={(event) => publishQuiz(event, id)}
-                variant="contained"
-                size="small"
-                color="warning"
-              >
-                publish
-              </Button>
-            )}
+              {isPublic ? (
+                <Button
+                  onClick={(event) => publishQuiz(event, id)}
+                  variant="contained"
+                  size="small"
+                  color="warning"
+                >
+                  Unpublish
+                </Button>
+              ) : (
+                <Button
+                  onClick={(event) => publishQuiz(event, id)}
+                  variant="contained"
+                  size="small"
+                  color="warning"
+                >
+                  publish
+                </Button>
+              )}
+            </Stack>
           </Stack>
         </AccordionSummary>
         <AccordionDetails>

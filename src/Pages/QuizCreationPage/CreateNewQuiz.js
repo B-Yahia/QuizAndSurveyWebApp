@@ -11,7 +11,7 @@ import CreateQuizStep3Component from "../../Comonents/QuizCreationSteps/CreateQu
 import "./QuizCreationPage.css";
 
 function CreateNewQuiz() {
-  const baseURL = "http://localhost:8080/quiz/add/";
+  const baseURL = "http://quizsurveyapp-production.up.railway.app/quiz/add/";
   const newQuiz = useSelector((state) => state.quiz);
 
   const navigate = useNavigate();

@@ -11,7 +11,8 @@ import CreateQuizStep3Component from "../../Comonents/QuizCreationSteps/CreateQu
 import "./QuizCreationPage.css";
 
 function CreateNewQuiz() {
-  const baseURL = "http://quizsurveyapp-production.up.railway.app/quiz/add/";
+  // const baseURL = "http://quizsurveyapp-production.up.railway.app/quiz/add/";
+  const baseURL = "http://localhost:8080/quiz/add/";
   const newQuiz = useSelector((state) => state.quiz);
 
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ function CreateNewQuiz() {
               return null;
           }
         })()}
-        {newQuiz.step === 3 && <Button onClick={saveQuiz}>saved</Button>}
+        {newQuiz.step === 3 && <Button onClick={saveQuiz}>save</Button>}
       </Stack>
     </div>
   );

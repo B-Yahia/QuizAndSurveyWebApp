@@ -7,7 +7,6 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import PublicQuizzesPage from "./Pages/PublicQuizzesPage/PublicQuizzesPage";
 import CreateNewQuiz from "./Pages/QuizCreationPage/CreateNewQuiz";
 import QuizCreationPage from "./Pages/QuizCreationPage/QuizCreationPage";
-import QuizPage from "./Pages/QuizPage/QuizPage";
 import QuizPage1 from "./Pages/QuizPage/QuizPage1";
 import SignupPage from "./Pages/SignupPage/SignupPage";
 
@@ -22,10 +21,10 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/register" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/create" element={<QuizCreationPage />} />
-          <Route path="/pqp" element={<PublicQuizzesPage />} />
+          <Route path="/all-quizzes" element={<PublicQuizzesPage />} />
           <Route path="/quiz/:id" element={<QuizPage1 />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/create-quiz" element={<CreateNewQuiz />} />

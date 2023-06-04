@@ -3,9 +3,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
 import "../CommunCss.css";
+import LogoutButton from "../../Comonents/Buttons/LogoutButton";
 
 function HomePage() {
   const userId = localStorage.getItem("userId");
+  // cannot get userId from backend, but login returns 200
+  // POST method from ../auth/login successful, returns token and id, code 200
+  // GET method from ../user/userid does not get userId from PathVariable, id returns "undefined",
+    // method cannot be invoked further.
   console.log(userId);
   return (
     <div>
@@ -36,12 +41,25 @@ function HomePage() {
               alignItems="center"
               spacing={2}
             >
-              <Link
-                to={"/signup"}
+        
+              {userId ? (
+                <>
+                  <LogoutButton />
+                  <Link
+                    to={"/"}
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                  >
+                  </Link>
+                </>
+              ) : (
+                <Link
+                to={"/register"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
                 <Button variant="outlined">Sign up</Button>
               </Link>
+                
+              )}
               {userId ? (
                 <Link
                   to={"/profile"}
@@ -67,7 +85,7 @@ function HomePage() {
               spacing={2}
             >
               <Link
-                to={"/pqp"}
+                to={"/all-quizzes"}
                 style={{ color: "inherit", textDecoration: "inherit" }}
               >
                 <Button variant="contained">Take a quiz</Button>

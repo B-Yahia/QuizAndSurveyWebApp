@@ -8,7 +8,7 @@ const newQuiz = createSlice({
     category: "",
     tags: [],
     questions: [],
-    public: true,
+    publicized: true,
     available: true,
     step: 1,
   },

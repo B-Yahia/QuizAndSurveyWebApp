@@ -101,7 +101,7 @@ function ProfilePage() {
               participants={item.participantList}
               desc={item.description}
               questions={item.questions}
-              isPublic={item.public}
+              isPublic={item.publicized}
             />
           ))}
       </Stack>

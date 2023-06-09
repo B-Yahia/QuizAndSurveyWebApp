@@ -7,10 +7,6 @@ import LogoutButton from "../../Comonents/Buttons/LogoutButton";
 
 function HomePage() {
   const userId = localStorage.getItem("userId");
-  // cannot get userId from backend, but login returns 200
-  // POST method from ../auth/login successful, returns token and id, code 200
-  // GET method from ../user/userid does not get userId from PathVariable, id returns "undefined",
-    // method cannot be invoked further.
   console.log(userId);
   return (
     <div>

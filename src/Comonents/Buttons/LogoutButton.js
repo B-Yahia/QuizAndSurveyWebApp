@@ -6,7 +6,9 @@ function LogoutButton() {
   const navigate = useNavigate();
   const logoutFunction = () => {
     localStorage.removeItem("userId");
+    console.log("logout worked")
     navigate("/");
+    window.location.reload();
   };
   return (
     <Button variant="outlined" onClick={logoutFunction}>

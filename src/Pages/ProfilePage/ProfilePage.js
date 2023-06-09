@@ -7,8 +7,8 @@ import UserDetails from "../../Comonents/ProfileComponenets/UserDetails";
 import UserQuizzes from "../../Comonents/ProfileComponenets/UserQuizzes";
 
 function ProfilePage() {
-  const baseURL = "http://quizsurveyapp-production.up.railway.app/user/";
-  const baseURL2 = "http://quizsurveyapp-production.up.railway.app/quiz/user/";
+  const baseURL = "http://localhost:8080/user/";
+  const baseURL2 = "http://localhost:8080/quiz/user/";
   const [eventDetails, setEventDetails] = useState();
   const [eventDetails2, setEventDetails2] = useState();
   const navigate = useNavigate();
@@ -16,7 +16,9 @@ function ProfilePage() {
   const params = useParams();
 
   async function getEvents() {
-    const userId = localStorage.getItem("userId");
+  
+    const userId = localStorage.getItem('userId');
+    console.log(userId)
     if (userId) {
       try {
         axios
@@ -99,7 +101,7 @@ function ProfilePage() {
               participants={item.participantList}
               desc={item.description}
               questions={item.questions}
-              isPublic={item.public}
+              isPublic={item.publicized}
             />
           ))}
       </Stack>

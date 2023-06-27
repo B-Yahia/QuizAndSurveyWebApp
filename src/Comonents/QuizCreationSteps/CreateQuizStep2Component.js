@@ -20,35 +20,46 @@ import WarningMessage from "../WarningMessageComponent/WarningMessage";
 function CreateQuizStep2Component() {
   const [questionStatement, setQuestionStatement] = useState("");
   const [answer, setAnswer] = useState("");
-  const [correctAnswer, setCorrectAnswer] = useState("");
   const [answersList, setAnswersList] = useState([]);
   const [warningMsg, setWarningMsg] = useState("");
+  const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const dispatch = useDispatch();
   const newQuiz = useSelector((state) => state.quiz);
 
   const addToAnswersList = (e) => {
     const newAnswer = {
       statement: answer,
+      correct: false,
     };
     answersList.push(newAnswer);
     setAnswer("");
   };
+  const checkHowManyCorrectAnswer = () => {
+    const count = answersList.filter((answer) => answer.correct).length;
+    setNumberOfCorrectAnswers(count);
+  };
   const addQuestionToList = (e) => {
     setWarningMsg("");
     e.preventDefault();
-    if (correctAnswer != "") {
+    checkHowManyCorrectAnswer();
+    console.log(numberOfCorrectAnswers);
+    console.log(answersList);
+    if (numberOfCorrectAnswers >= 1) {
       const newQuestion = {
-        questionStatement: questionStatement,
+        statement: questionStatement,
         answers: answersList,
-        correctAnswer: { statement: correctAnswer },
       };
       dispatch(quizAction.addQuestion({ newQuestion }));
       setQuestionStatement("");
       setAnswersList([]);
-      setCorrectAnswer("");
     } else {
       setWarningMsg("Please select correct answer");
     }
+  };
+  const changeAnswerStatus = (index, newValue) => {
+    const updatedAnswersList = [...answersList];
+    updatedAnswersList[index].correct = newValue === "true";
+    setAnswersList(updatedAnswersList);
   };
   const nextStep = (e) => {
     e.preventDefault();
@@ -120,24 +131,33 @@ function CreateQuizStep2Component() {
             <FormLabel id="demo-row-radio-buttons-group-label">
               Answers (Please select which once is the correct answer)
             </FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-              onChange={(event) => {
-                setCorrectAnswer(event.target.value);
-              }}
-            >
-              {answersList.map((answer, index) => (
-                <FormControlLabel
-                  key={index}
-                  label={answer.statement}
-                  control={<Radio />}
-                  value={answer.statement}
-                />
-              ))}
-            </RadioGroup>
           </FormControl>
+          {answersList.map((answer, index) => (
+            <FormControl key={index}>
+              <FormLabel id="demo-radio-buttons-group-label">
+                {answer.statement}
+              </FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+                value={answer.correct ? "true" : "false"}
+                onChange={(event) =>
+                  changeAnswerStatus(index, event.target.value)
+                }
+              >
+                <FormControlLabel
+                  value="true"
+                  control={<Radio />}
+                  label="true"
+                />
+                <FormControlLabel
+                  value="false"
+                  control={<Radio />}
+                  label="false"
+                />
+              </RadioGroup>
+            </FormControl>
+          ))}
         </Stack>
         <Divider />
         <div>

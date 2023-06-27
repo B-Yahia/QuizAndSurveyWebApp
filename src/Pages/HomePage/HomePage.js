@@ -5,6 +5,9 @@ import "./HomePage.css";
 import "../CommunCss.css";
 
 function HomePage() {
+  const url = "localhost:8080";
+  // const url = "quizsurveyapp-production.up.railway.app";
+  localStorage.setItem("url", url);
   const userId = localStorage.getItem("userId");
   console.log(userId);
   return (

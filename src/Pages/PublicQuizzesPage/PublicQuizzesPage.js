@@ -12,13 +12,13 @@ import QuizCard from "../../Comonents/PublicQuizPageComponent/QuizCard";
 
 const options = ["4", "5", "6", , "8", "10"];
 function PublicQuizzesPage() {
-  const baseURL = "http://quizsurveyapp-production.up.railway.app/quiz/all";
+  const url = localStorage.getItem("url");
+  const baseURL = "http://" + url + "/quiz/all";
   const [eventDetails, setEventDetails] = useState([]);
   const [limitpage, setLimitPage] = useState();
   const [responseDetails, setResponseDetails] = useState();
   const [page, setPage] = useState(1);
-  const paginationURL =
-    "http://quizsurveyapp-production.up.railway.app/quiz/pagination/";
+  const paginationURL = "http://" + url + "/quiz/pagination/";
   const [value, setValue] = useState(options[0]);
 
   async function getEventsWithPagination() {

@@ -12,25 +12,24 @@ import axios from "axios";
 import QuestionsList from "./QuestionsList";
 import ParticipantsList from "./ParticipantsList";
 
-function UserQuizzes({
-  id,
-  title,
-  desc,
-  nmQuestions,
-  nmParticipants,
-  questions,
-  participants,
-  isPublic,
-}) {
+function UserQuizzes(props) {
+  const {
+    id,
+    title,
+    desc,
+    nmQuestions,
+    nmParticipants,
+    questions,
+    participants,
+    publicAccess,
+  } = props;
   const [tab, setTab] = useState(1);
-  const removeQuizURL = "http://localhost:8080/quiz/remove/";
-  const pulblishQuizURL = "http://localhost:8080/quiz/public/";
+  const url = localStorage.getItem("url");
   async function removeQuiz(event, quizID) {
-    console.log(quizID);
-
     event.preventDefault();
+    const baseURL = "http://" + url + "/quiz/remove/";
     await axios
-      .put(removeQuizURL + quizID)
+      .put(baseURL + quizID)
       .then(function (response) {
         window.location.reload();
       })
@@ -39,11 +38,10 @@ function UserQuizzes({
       });
   }
   async function publishQuiz(event, quizID) {
-    console.log(quizID);
-
     event.preventDefault();
+    const baseURL = "http://" + url + "/quiz/public/";
     await axios
-      .put(pulblishQuizURL + quizID)
+      .put(baseURL + quizID)
       .then(function (response) {
         window.location.reload();
       })
@@ -69,6 +67,7 @@ function UserQuizzes({
             >
               <Stack direction="column">
                 <div>Title :</div>
+
                 <div className="small-text">{title}</div>
               </Stack>
               <Stack direction="column">
@@ -90,7 +89,7 @@ function UserQuizzes({
               >
                 Remove
               </Button>
-              {isPublic ? (
+              {publicAccess ? (
                 <Button
                   onClick={(event) => publishQuiz(event, id)}
                   variant="contained"
@@ -114,8 +113,16 @@ function UserQuizzes({
         </AccordionSummary>
         <AccordionDetails>
           <Divider />
-          <Button onClick={(e) => setTab(1)}>questions</Button>
-          <Button onClick={(e) => setTab(2)}>Participant</Button>
+          {questions ? (
+            <Button onClick={(e) => setTab(1)}>questions</Button>
+          ) : (
+            <></>
+          )}
+          {participants ? (
+            <Button onClick={(e) => setTab(2)}>Participant</Button>
+          ) : (
+            <></>
+          )}
           <Divider />
           {(() => {
             switch (tab) {

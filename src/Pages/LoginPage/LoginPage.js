@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const url = localStorage.getItem("url");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ function LoginPage() {
     };
 
     await axios
-      .post("http://quizsurveyapp-production.up.railway.app/auth/login", log)
+      .post("http://" + url + "/auth/login", log)
       .then(function (response) {
         console.log(response);
         const userId = response.data.id;

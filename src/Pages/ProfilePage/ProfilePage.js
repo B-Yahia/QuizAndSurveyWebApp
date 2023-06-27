@@ -7,10 +7,9 @@ import UserDetails from "../../Comonents/ProfileComponenets/UserDetails";
 import UserQuizzes from "../../Comonents/ProfileComponenets/UserQuizzes";
 
 function ProfilePage() {
-  const baseURL = "http://quizsurveyapp-production.up.railway.app/user/";
-  const baseURL2 = "http://quizsurveyapp-production.up.railway.app/quiz/user/";
+  const url = localStorage.getItem("url");
+  const baseURL = "http://" + url + "/author/";
   const [eventDetails, setEventDetails] = useState();
-  const [eventDetails2, setEventDetails2] = useState();
   const navigate = useNavigate();
 
   const params = useParams();
@@ -18,19 +17,16 @@ function ProfilePage() {
   async function getEvents() {
     const userId = localStorage.getItem("userId");
     if (userId) {
-      try {
-        axios
-          .all([axios.get(baseURL + userId), axios.get(baseURL2 + userId)])
-          .then(
-            axios.spread((response1, response2) => {
-              setEventDetails(response1.data);
-              console.log(response2.data);
-              setEventDetails2(response2.data);
-            })
-          );
-      } catch (error) {
-        console.error(error);
-      }
+      axios
+        .get(baseURL + userId)
+        .then(function (response) {
+          console.log(response.data);
+          setEventDetails(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       navigate("/");
     }
@@ -88,19 +84,25 @@ function ProfilePage() {
             </Button>
           </Link>
         </Stack>
-        {!!eventDetails2 &&
-          eventDetails2.map((item) => (
-            <UserQuizzes
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              nmQuestions={item.questions.length}
-              nmParticipants={item.participantList.length}
-              participants={item.participantList}
-              desc={item.description}
-              questions={item.questions}
-              isPublic={item.public}
-            />
+        {!!eventDetails &&
+          eventDetails.quizzes.map((item) => (
+            <>
+              <UserQuizzes
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                nmQuestions={item.questions ? item.questions.length : 0}
+                nmParticipants={
+                  item.participantList ? item.participantList.length : 0
+                }
+                participants={item.participantList}
+                desc={item.description}
+                questions={item.questions}
+                publicAccess={item.publicAccess}
+              />
+              <>{item.publicAccess ? <>true</> : <>false</>}</>
+              <> {item.title}</>
+            </>
           ))}
       </Stack>
     </div>

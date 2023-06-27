@@ -161,7 +161,7 @@ function CreateQuizStep2Component() {
         </Stack>
         <Divider />
         <div>
-          Number of questions added to the quiz is : {newQuiz.questions.length}
+          Number of questions added to the quiz is: {newQuiz.questions.length}
         </div>
         {warningMsg.length >= 1 ? <WarningMessage msg={warningMsg} /> : <></>}
         <Divider />

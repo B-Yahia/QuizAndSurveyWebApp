@@ -7,22 +7,16 @@ import UserDetails from "../../Comonents/ProfileComponenets/UserDetails";
 import UserQuizzes from "../../Comonents/ProfileComponenets/UserQuizzes";
 
 function ProfilePage() {
-<<<<<<< HEAD
   const url = localStorage.getItem("url");
   const baseURL = "http://" + url + "/author/";
-=======
-  const baseURL = "http://localhost:8080/user/";
-  const baseURL2 = "http://localhost:8080/quiz/user/";
->>>>>>> 9994fe8761269c59ad06e33bf52bcc05b5a4ea2b
   const [eventDetails, setEventDetails] = useState();
   const navigate = useNavigate();
 
   const params = useParams();
 
   async function getEvents() {
-  
-    const userId = localStorage.getItem('userId');
-    console.log(userId)
+    const userId = localStorage.getItem("userId");
+    console.log(userId);
     if (userId) {
       axios
         .get(baseURL + userId)
@@ -91,41 +85,22 @@ function ProfilePage() {
             </Button>
           </Link>
         </Stack>
-<<<<<<< HEAD
+
         {!!eventDetails &&
           eventDetails.quizzes.map((item) => (
-            <>
-              <UserQuizzes
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                nmQuestions={item.questions ? item.questions.length : 0}
-                nmParticipants={
-                  item.participantList ? item.participantList.length : 0
-                }
-                participants={item.participantList}
-                desc={item.description}
-                questions={item.questions}
-                publicAccess={item.publicAccess}
-              />
-              <>{item.publicAccess ? <>true</> : <>false</>}</>
-              <> {item.title}</>
-            </>
-=======
-        {!!eventDetails2 &&
-          eventDetails2.map((item) => (
             <UserQuizzes
               key={item.id}
               id={item.id}
               title={item.title}
-              nmQuestions={item.questions.length}
-              nmParticipants={item.participantList.length}
+              nmQuestions={item.questions ? item.questions.length : 0}
+              nmParticipants={
+                item.participantList ? item.participantList.length : 0
+              }
               participants={item.participantList}
               desc={item.description}
               questions={item.questions}
-              isPublic={item.publicized}
+              publicAccess={item.publicAccess}
             />
->>>>>>> 9994fe8761269c59ad06e33bf52bcc05b5a4ea2b
           ))}
       </Stack>
     </div>

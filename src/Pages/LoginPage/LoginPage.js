@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../CommunCss.css";
-import { Button, Stack, TextField } from "@mui/material";
+import { Alert, Button, Stack, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
+  // const baseURL = "http://quizsurveyapp-production.up.railway.app/auth/login";
+  const baseURL = "http://localhost:8080/auth/login";
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const url = localStorage.getItem("url");
@@ -12,13 +14,18 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const logUser = async () => {
+    setError("");
     const log = {
       username: username,
       password: password,
     };
 
     await axios
+<<<<<<< HEAD
       .post("http://" + url + "/auth/login", log)
+=======
+      .post(baseURL, log)
+>>>>>>> 9994fe8761269c59ad06e33bf52bcc05b5a4ea2b
       .then(function (response) {
         console.log(response);
         const userId = response.data.id;
@@ -26,8 +33,7 @@ function LoginPage() {
         navigate("/profile");
       })
       .catch((error) => {
-        console.log("first");
-        console.log(error);
+        setError("Incorrect username and/or password.")
       });
   };
 
@@ -67,6 +73,13 @@ function LoginPage() {
             value={password}
           />
 
+          <Stack>
+            {error !== "" ? (
+              <Alert severity="warning">{error}</Alert>
+            ) : (
+            <></>
+            )}
+          </Stack>
           <Stack
             direction="row"
             justifyContent="space-around"

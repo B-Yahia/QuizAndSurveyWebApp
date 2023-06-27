@@ -13,6 +13,7 @@ import "./QuizCreationPage.css";
 function CreateNewQuiz() {
   const url = localStorage.getItem("url");
   const baseURL = "http://" + url + "/quiz/";
+
   const newQuiz = useSelector((state) => state.quiz);
 
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ function CreateNewQuiz() {
               return null;
           }
         })()}
-        {newQuiz.step === 3 && <Button onClick={saveQuiz}>saved</Button>}
+        {newQuiz.step === 3 && <Button onClick={saveQuiz}>save</Button>}
       </Stack>
     </div>
   );

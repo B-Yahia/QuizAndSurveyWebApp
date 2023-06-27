@@ -16,12 +16,21 @@ import {
 import "./QuizPage.css";
 
 function QuizPage1() {
+<<<<<<< HEAD
   const url = localStorage.getItem("url");
   const callURL = "http://" + url + "/quiz/";
   const postURL = "http://" + url + "/participant/add/";
+=======
+  // const callURL = "http://quizsurveyapp-production.up.railway.app/quiz/";
+  // const postURL =
+  //   "http://quizsurveyapp-production.up.railway.app/participant/add/";
+
+  const callURL = "http://localhost:8080/quiz/"
+  const postURL = "http://localhost:8080/participant/add"
+>>>>>>> 9994fe8761269c59ad06e33bf52bcc05b5a4ea2b
   const [msg, setMgg] = useState("");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [score, setScore] = useState(0);
   const [Index, setIndex] = useState(0);
   const [eventDetails, setEventDetails] = useState();
@@ -39,20 +48,20 @@ function QuizPage1() {
   }
   const sendAnswer = async () => {
     const user = {
-      firstName: fname,
-      lastName: lname,
+      firstName: firstName,
+      lastName: lastName,
       score: score,
     };
     await axios
       .post(postURL + params.id, user)
       .then(function (response) {
         console.log(response);
-        setFname("");
-        setLname("");
+        setFirstName("");
+        setLastName("");
         setMgg("");
         setScore(0);
         setIndex(0);
-        navigate("/pqp");
+        navigate("/all-quizzes");
       })
       .catch(function (error) {
         console.log(error);
@@ -107,9 +116,9 @@ function QuizPage1() {
                 label="First name"
                 variant="outlined"
                 onChange={(event) => {
-                  setFname(event.target.value);
+                  setFirstName(event.target.value);
                 }}
-                value={fname}
+                value={firstName}
                 size="small"
               />
               <TextField
@@ -117,9 +126,9 @@ function QuizPage1() {
                 label="Last name"
                 variant="outlined"
                 onChange={(event) => {
-                  setLname(event.target.value);
+                  setLastName(event.target.value);
                 }}
-                value={lname}
+                value={lastName}
                 size="small"
               />
               <Button

@@ -6,8 +6,15 @@ import "./SignupPage.css";
 import axios from "axios";
 
 function SignupPage() {
+<<<<<<< HEAD
   const url = localStorage.getItem("url");
   const baseURL = "http://" + url + "/auth/register";
+=======
+  // const baseURL =
+  //   "http://quizsurveyapp-production.up.railway.app/auth/register";
+  const baseURL =
+    "http://localhost:8080/auth/register";
+>>>>>>> 9994fe8761269c59ad06e33bf52bcc05b5a4ea2b
   const goHome = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -159,8 +166,8 @@ function SignupPage() {
               spacing={0.5}
             >
               <Button onClick={createUser}>Create account</Button>
-              <Link to={"/login"}>
-                <Button>Login page</Button>
+              <Link to={"/"}>
+                <Button>Home page</Button>
               </Link>
             </Stack>
             <Stack>

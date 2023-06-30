@@ -60,6 +60,7 @@ function CreateQuizStep2Component() {
     const updatedAnswersList = [...answersList];
     updatedAnswersList[index].correct = newValue === "true";
     setAnswersList(updatedAnswersList);
+    checkHowManyCorrectAnswer();
   };
   const nextStep = (e) => {
     e.preventDefault();

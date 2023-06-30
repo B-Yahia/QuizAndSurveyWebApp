@@ -94,9 +94,9 @@ function ProfilePage() {
               title={item.title}
               nmQuestions={item.questions ? item.questions.length : 0}
               nmParticipants={
-                item.participantList ? item.participantList.length : 0
+                item.participationList ? item.participationList.length : 0
               }
-              participants={item.participantList}
+              participants={item.participationList}
               desc={item.description}
               questions={item.questions}
               publicAccess={item.publicAccess}

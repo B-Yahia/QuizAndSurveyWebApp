@@ -32,14 +32,22 @@ function QuizCard({ item }) {
               <div>Category : </div>
               <Chip label={item.category} />
             </Stack>
+
             <Stack direction="column">
               <div>Num of questions : </div>
               <Chip label={item.questions.length} />
             </Stack>
-            <Stack direction="column">
-              <div>Num of participant : </div>
-              <Chip label={item.participantList.length} />
-            </Stack>
+            {item.participationList.length ? (
+              <Stack direction="column">
+                <div>Num of participant : </div>
+                <Chip label={item.participationList.length} />
+              </Stack>
+            ) : (
+              <Stack direction="column">
+                <div>Num of participant : </div>
+                <Chip label="0" />
+              </Stack>
+            )}
           </Stack>
 
           {item.tags && item.tags.length > 0 && <Divider>TAGS</Divider>}

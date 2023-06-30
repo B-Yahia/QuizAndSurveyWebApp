@@ -7,7 +7,7 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import PublicQuizzesPage from "./Pages/PublicQuizzesPage/PublicQuizzesPage";
 import CreateNewQuiz from "./Pages/QuizCreationPage/CreateNewQuiz";
 import QuizCreationPage from "./Pages/QuizCreationPage/QuizCreationPage";
-import QuizPage1 from "./Pages/QuizPage/QuizPage1";
+import QuizPage from "./Pages/QuizPage/QuizPage";
 import SignupPage from "./Pages/SignupPage/SignupPage";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/create" element={<QuizCreationPage />} />
           <Route path="/all-quizzes" element={<PublicQuizzesPage />} />
-          <Route path="/quiz/:id" element={<QuizPage1 />} />
+          <Route path="/quiz/:id" element={<QuizPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/create-quiz" element={<CreateNewQuiz />} />
         </Routes>

@@ -7,6 +7,7 @@ import { quizAction } from "../../Store/createQuiz-slice";
 
 function CreateQuizStep3Component() {
   const quiz = useSelector((state) => state.quiz);
+  console.log(quiz);
   const dispatch = useDispatch();
   const removeAnswer = (QId, AId) => {
     const question = quiz.questions[QId];
@@ -35,10 +36,15 @@ function CreateQuizStep3Component() {
         <Stack
           direction="column"
           justifyContent="space-between"
-          alignItems="stretch"
+          alignItems="center"
+          minHeight="50px"
         >
-          <div>{quiz.title}</div>
-          <div>{quiz.description}</div>
+          <Paper elevation={2}>
+            <div>{quiz.title}</div>
+          </Paper>
+          <Paper elevation={1}>
+            <div>{quiz.description}</div>
+          </Paper>
         </Stack>
       </Paper>
       <Paper>

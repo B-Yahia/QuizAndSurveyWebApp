@@ -5,7 +5,7 @@ function ParticipantsList({ participants }) {
   return (
     <div>
       {participants.map((item, index) => (
-        <Stack key={index}>
+        <Stack key={item.id}>
           <div>
             Name : {item.firstName} {item.lastName}
           </div>

@@ -118,7 +118,7 @@ function UserQuizzes(props) {
           ) : (
             <></>
           )}
-          {participants ? (
+          {nmParticipants !== 0 ? (
             <Button onClick={(e) => setTab(2)}>Participant</Button>
           ) : (
             <></>

@@ -27,9 +27,8 @@ const newQuiz = createSlice({
     },
     addQuestion(state, action) {
       const newQuestion = {
-        statement: action.payload.newQuestion.questionStatement,
+        statement: action.payload.newQuestion.statement,
         answers: action.payload.newQuestion.answers,
-        correctAnswer: action.payload.newQuestion.correctAnswer,
       };
 
       state.questions.push(newQuestion);
@@ -43,7 +42,6 @@ const newQuiz = createSlice({
       const updatedQuestion = {
         statement: action.payload.newQuestion.statement,
         answers: action.payload.newQuestion.answers,
-        correctAnswer: action.payload.newQuestion.correctAnswer,
       };
       state.questions.splice(index, 1, updatedQuestion);
     },

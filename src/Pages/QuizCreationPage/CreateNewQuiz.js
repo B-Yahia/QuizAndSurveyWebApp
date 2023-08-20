@@ -1,7 +1,7 @@
 import { Stack, Button } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { quizAction } from "../../Store/createQuiz-slice";
 
 import "../CommunCss.css";

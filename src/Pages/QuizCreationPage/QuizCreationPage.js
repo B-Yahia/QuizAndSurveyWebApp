@@ -27,7 +27,6 @@ function QuizCreationPage() {
   const [answer, setAnswer] = useState("");
   const [answersList, setAnswersList] = useState([]);
   const params = useParams();
-  const navigate = useNavigate();
   const [question, setQuestion] = useState({
     questionStatement: "",
     answers: [],
@@ -258,7 +257,7 @@ function QuizCreationPage() {
             </Paper>
             <Paper className="sm-sections">
               <Stack direction="column" spacing={2} className="small-section">
-                {questionsList.length == 0 ? (
+                {questionsList.length === 0 ? (
                   <div>No question created yet</div>
                 ) : (
                   createdQuestions

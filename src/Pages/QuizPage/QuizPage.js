@@ -69,7 +69,7 @@ function QuizPage() {
   }, []);
 
   const MoveToTheNext = () => {
-    if (selectedAnswers.length == 0) {
+    if (selectedAnswers.length === 0) {
       setMgg("Please select at least one answer");
     } else {
       if (Index < eventDetails.questions.length - 1) {
@@ -94,7 +94,7 @@ function QuizPage() {
   const addResponseOfCheckBox = (e) => {
     e.preventDefault();
     const value = e.target.value;
-    if (selectedAnswers.length == 0) {
+    if (selectedAnswers.length === 0) {
       selectedAnswers.push(value);
     } else {
       if (selectedAnswers.includes(value)) {
@@ -217,10 +217,10 @@ function QuizPage() {
             )}
           </div>
         )}
-        {Index != 0 ? (
+        {Index !== 0 ? (
           <Stack direction="row" spacing={4}>
             <div>
-              {Index + 1 == eventDetails.questions.length ? (
+              {Index + 1 === eventDetails.questions.length ? (
                 <></>
               ) : (
                 <>
@@ -234,7 +234,7 @@ function QuizPage() {
           </Stack>
         ) : (
           <Stack direction="row" spacing={4}>
-            {msg.length == 0 ? <></> : <Chip label={msg} />}
+            {msg.length === 0 ? <></> : <Chip label={msg} />}
 
             <Button onClick={() => MoveToTheNext()}>Next</Button>
           </Stack>

@@ -11,14 +11,13 @@ import {
 } from "@mui/material";
 import { quizAction } from "../../Store/createQuiz-slice";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import WarningMessage from "../WarningMessageComponent/WarningMessage";
 
 function CreateQuizStep1Component() {
   const [title, setTitle] = useState("");
   const [desq, setDesq] = useState("");
   const [quizStatus, setQuizStatus] = useState(true);
-  const newQuiz = useSelector((state) => state.quiz);
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState([]);
   const [tag, setTag] = useState("");
@@ -137,7 +136,7 @@ function CreateQuizStep1Component() {
           justifyContent="space-around"
           alignItems="flex-end"
         >
-          {title.length != 0 && category != "" ? (
+          {title.length !== 0 && category !== "" ? (
             <Button onClick={saveStep1}>Next</Button>
           ) : (
             <></>

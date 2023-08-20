@@ -1,21 +1,19 @@
-import { Button, Stack } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import LogoutButton from "../../Comonents/Buttons/LogoutButton";
-import UserDetails from "../../Comonents/ProfileComponenets/UserDetails";
-import UserQuizzes from "../../Comonents/ProfileComponenets/UserQuizzes";
+import { Button, Stack } from '@mui/material';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import LogoutButton from '../../Comonents/Buttons/LogoutButton';
+import UserDetails from '../../Comonents/ProfileComponenets/UserDetails';
+import UserQuizzes from '../../Comonents/ProfileComponenets/UserQuizzes';
 
 function ProfilePage() {
-  const url = localStorage.getItem("url");
-  const baseURL = "http://" + url + "/author/";
+  const url = localStorage.getItem('url');
+  const baseURL = 'http://' + url + '/author/';
   const [eventDetails, setEventDetails] = useState();
   const navigate = useNavigate();
 
-  const params = useParams();
-
   async function getEvents() {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem('userId');
     console.log(userId);
     if (userId) {
       axios
@@ -29,12 +27,13 @@ function ProfilePage() {
           console.log(error);
         });
     } else {
-      navigate("/");
+      navigate('/');
     }
   }
 
   useEffect(() => {
     getEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -55,8 +54,8 @@ function ProfilePage() {
           <>
             <LogoutButton />
             <Link
-              to={"/"}
-              style={{ color: "inherit", textDecoration: "inherit" }}
+              to={'/'}
+              style={{ color: 'inherit', textDecoration: 'inherit' }}
             >
               <Button variant="outlined">home page</Button>
             </Link>
@@ -77,8 +76,8 @@ function ProfilePage() {
         >
           <div className="page-title">List of quizzes created by me</div>
           <Link
-            to={"/create-quiz"}
-            style={{ color: "inherit", textDecoration: "inherit" }}
+            to={'/create-quiz'}
+            style={{ color: 'inherit', textDecoration: 'inherit' }}
           >
             <Button variant="contained" size="small">
               Create new quiz

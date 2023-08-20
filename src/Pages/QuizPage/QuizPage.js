@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import {
   FormControl,
   FormControlLabel,
@@ -14,16 +14,16 @@ import {
   Chip,
   FormGroup,
   Checkbox,
-} from "@mui/material";
-import "./QuizPage.css";
+} from '@mui/material';
+import './QuizPage.css';
 
 function QuizPage() {
-  const url = localStorage.getItem("url");
-  const callURL = "http://" + url + "/quiz/";
-  const postURL = "http://" + url + "/participant";
-  const [msg, setMgg] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const url = localStorage.getItem('url');
+  const callURL = 'http://' + url + '/quiz/';
+  const postURL = 'http://' + url + '/participant';
+  const [msg, setMgg] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [Index, setIndex] = useState(0);
   const [eventDetails, setEventDetails] = useState();
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -51,12 +51,12 @@ function QuizPage() {
       .post(postURL, user)
       .then(function (response) {
         console.log(response);
-        setFirstName("");
-        setLastName("");
-        setMgg("");
+        setFirstName('');
+        setLastName('');
+        setMgg('');
         setIndex(0);
         setQuestionResponseList([]);
-        navigate("/all-quizzes");
+        navigate('/all-quizzes');
       })
       .catch(function (error) {
         console.log(error);
@@ -66,11 +66,12 @@ function QuizPage() {
 
   useEffect(() => {
     getEvents();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const MoveToTheNext = () => {
     if (selectedAnswers.length === 0) {
-      setMgg("Please select at least one answer");
+      setMgg('Please select at least one answer');
     } else {
       if (Index < eventDetails.questions.length - 1) {
         const questionResponse = {
@@ -85,7 +86,7 @@ function QuizPage() {
           selectedAnswerIds: selectedAnswers,
         };
         setQuestionResponseList([...questionResponseList, questionResponse]);
-        setMgg("test finish");
+        setMgg('test finish');
       }
     }
     console.log(questionResponseList);
@@ -122,7 +123,7 @@ function QuizPage() {
       >
         <div className="page-title">quiz page</div>
 
-        {msg === "test finish" ? (
+        {msg === 'test finish' ? (
           <Paper className="question">
             <Stack
               direction="row"

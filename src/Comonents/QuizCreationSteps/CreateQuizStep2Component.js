@@ -10,17 +10,17 @@ import {
   RadioGroup,
   Stack,
   TextField,
-} from "@mui/material";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { quizAction } from "../../Store/createQuiz-slice";
-import WarningMessage from "../WarningMessageComponent/WarningMessage";
+} from '@mui/material';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { quizAction } from '../../Store/createQuiz-slice';
+import WarningMessage from '../WarningMessageComponent/WarningMessage';
 
 function CreateQuizStep2Component() {
-  const [questionStatement, setQuestionStatement] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [questionStatement, setQuestionStatement] = useState('');
+  const [answer, setAnswer] = useState('');
   const [answersList, setAnswersList] = useState([]);
-  const [warningMsg, setWarningMsg] = useState("");
+  const [warningMsg, setWarningMsg] = useState('');
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
   const dispatch = useDispatch();
   const newQuiz = useSelector((state) => state.quiz);
@@ -31,14 +31,14 @@ function CreateQuizStep2Component() {
       correct: false,
     };
     answersList.push(newAnswer);
-    setAnswer("");
+    setAnswer('');
   };
   const checkHowManyCorrectAnswer = () => {
     const count = answersList.filter((answer) => answer.correct).length;
     setNumberOfCorrectAnswers(count);
   };
   const addQuestionToList = (e) => {
-    setWarningMsg("");
+    setWarningMsg('');
     e.preventDefault();
     checkHowManyCorrectAnswer();
     console.log(numberOfCorrectAnswers);
@@ -49,15 +49,15 @@ function CreateQuizStep2Component() {
         answers: answersList,
       };
       dispatch(quizAction.addQuestion({ newQuestion }));
-      setQuestionStatement("");
+      setQuestionStatement('');
       setAnswersList([]);
     } else {
-      setWarningMsg("Please select correct answer");
+      setWarningMsg('Please select correct answer');
     }
   };
   const changeAnswerStatus = (index, newValue) => {
     const updatedAnswersList = [...answersList];
-    updatedAnswersList[index].correct = newValue === "true";
+    updatedAnswersList[index].correct = newValue === 'true';
     setAnswersList(updatedAnswersList);
     checkHowManyCorrectAnswer();
   };
@@ -66,7 +66,7 @@ function CreateQuizStep2Component() {
     dispatch(quizAction.nextStep());
   };
   const handleKeyDown = (event) => {
-    if (event.key === "Enter" && answer != "") {
+    if (event.key === 'Enter' && answer !== '') {
       addToAnswersList(event);
     }
   };
@@ -140,7 +140,7 @@ function CreateQuizStep2Component() {
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
-                value={answer.correct ? "true" : "false"}
+                value={answer.correct ? 'true' : 'false'}
                 onChange={(event) =>
                   changeAnswerStatus(index, event.target.value)
                 }

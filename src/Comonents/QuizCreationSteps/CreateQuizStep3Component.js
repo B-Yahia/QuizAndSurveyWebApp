@@ -1,9 +1,9 @@
-import { Button, Chip, Divider, Paper } from "@mui/material";
-import { Stack } from "@mui/system";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import QuizModal from "../Modal/QuizModal";
-import { quizAction } from "../../Store/createQuiz-slice";
+import { Button, Chip, Paper } from '@mui/material';
+import { Stack } from '@mui/system';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import QuizModal from '../Modal/QuizModal';
+import { quizAction } from '../../Store/createQuiz-slice';
 
 function CreateQuizStep3Component() {
   const quiz = useSelector((state) => state.quiz);

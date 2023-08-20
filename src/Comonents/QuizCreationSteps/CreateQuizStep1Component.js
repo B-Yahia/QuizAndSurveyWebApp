@@ -8,54 +8,54 @@ import {
   Stack,
   Switch,
   TextField,
-} from "@mui/material";
-import { quizAction } from "../../Store/createQuiz-slice";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import WarningMessage from "../WarningMessageComponent/WarningMessage";
+} from '@mui/material';
+import { quizAction } from '../../Store/createQuiz-slice';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import WarningMessage from '../WarningMessageComponent/WarningMessage';
 
 function CreateQuizStep1Component() {
-  const [title, setTitle] = useState("");
-  const [desq, setDesq] = useState("");
+  const [title, setTitle] = useState('');
+  const [desq, setDesq] = useState('');
   const [quizStatus, setQuizStatus] = useState(true);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
   const [tags, setTags] = useState([]);
-  const [tag, setTag] = useState("");
-  const [warningMsg, setWarningMsg] = useState("");
+  const [tag, setTag] = useState('');
+  const [warningMsg, setWarningMsg] = useState('');
 
   const quizTopics = [
-    "General Knowledge",
-    "History",
-    "Geography",
-    "Science",
-    "Mathematics",
-    "Literature",
-    "Music",
-    "Sports",
-    "Art",
-    "Movies and TV",
-    "Technology",
-    "Politics",
-    "Animals",
-    "Food and Drink",
-    "Fashion",
-    "Business and Finance",
-    "Environment",
-    "Social Issues",
-    "Travel",
-    "Languages",
-    "Humanities",
-    "Mythology",
-    "Philosophy",
-    "Religion",
-    "Pop Culture",
+    'General Knowledge',
+    'History',
+    'Geography',
+    'Science',
+    'Mathematics',
+    'Literature',
+    'Music',
+    'Sports',
+    'Art',
+    'Movies and TV',
+    'Technology',
+    'Politics',
+    'Animals',
+    'Food and Drink',
+    'Fashion',
+    'Business and Finance',
+    'Environment',
+    'Social Issues',
+    'Travel',
+    'Languages',
+    'Humanities',
+    'Mythology',
+    'Philosophy',
+    'Religion',
+    'Pop Culture',
   ];
 
   const dispatch = useDispatch();
   const saveStep1 = () => {
     dispatch(quizAction.addTitleAndDesc({ title, desq, category, tags }));
-    setDesq("");
-    setTitle("");
+    setDesq('');
+    setTitle('');
     dispatch(quizAction.nextStep());
   };
   const addTagToList = (event) => {
@@ -64,14 +64,14 @@ function CreateQuizStep1Component() {
       const newTag = tag;
       setTags([...tags, newTag]);
       console.log(tags);
-      setTag("");
+      setTag('');
     } else {
-      setWarningMsg("The tag can not be empty");
+      setWarningMsg('The tag can not be empty');
     }
   };
   const handleKeyDown = (event) => {
-    setWarningMsg("");
-    if (event.key === "Enter") {
+    setWarningMsg('');
+    if (event.key === 'Enter') {
       addTagToList(event);
     }
   };
@@ -136,7 +136,7 @@ function CreateQuizStep1Component() {
           justifyContent="space-around"
           alignItems="flex-end"
         >
-          {title.length !== 0 && category !== "" ? (
+          {title.length !== 0 && category !== '' ? (
             <Button onClick={saveStep1}>Next</Button>
           ) : (
             <></>

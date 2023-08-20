@@ -4,19 +4,18 @@ import {
   Stack,
   TextField,
   Button,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import "./PublicQuizzesPage.css";
-import QuizCard from "../../Comonents/PublicQuizPageComponent/QuizCard";
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import './PublicQuizzesPage.css';
+import QuizCard from '../../Comonents/PublicQuizPageComponent/QuizCard';
 
-const options = ["4", "5", "6", , "8", "10"];
+const options = ['4', '5', '6', '8', '10'];
 function PublicQuizzesPage() {
-  const url = localStorage.getItem("url");
-  const baseURL = "http://" + url + "/quiz/";
+  const url = localStorage.getItem('url');
+  const baseURL = 'http://' + url + '/quiz/';
 
-  const [eventDetails, setEventDetails] = useState([]);
   const [limitpage, setLimitPage] = useState();
   const [responseDetails, setResponseDetails] = useState();
   const [page, setPage] = useState(1);
@@ -26,7 +25,7 @@ function PublicQuizzesPage() {
   async function getEventsWithPagination() {
     const newPage = page - 1;
     try {
-      const response = await axios.get(baseURL + newPage + "/" + value);
+      const response = await axios.get(baseURL + newPage + '/' + value);
       setResponseDetails(response.data.quizDTOList);
       setLimitPage(response.data.numberOfPages);
       console.log(response.data);
@@ -42,6 +41,7 @@ function PublicQuizzesPage() {
 
   useEffect(() => {
     getEventsWithPagination();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, page]);
 
   return (
@@ -93,7 +93,7 @@ function PublicQuizzesPage() {
           alignItems="center"
           spacing={0.5}
         >
-          <Link to={"/"}>
+          <Link to={'/'}>
             <Button>home page</Button>
           </Link>
         </Stack>

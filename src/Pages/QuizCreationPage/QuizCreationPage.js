@@ -9,29 +9,26 @@ import {
   Stack,
   Switch,
   TextField,
-} from "@mui/material";
-import axios from "axios";
-import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import "../CommunCss.css";
-import "./QuizCreationPage.css";
+} from '@mui/material';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import '../CommunCss.css';
+import './QuizCreationPage.css';
 
 function QuizCreationPage() {
-  const baseURL = "http://localhost:8080/quiz/create/";
+  const baseURL = 'http://localhost:8080/quiz/create/';
 
-  const [title, setTitle] = useState("");
-  const [desq, setDesq] = useState("");
+  const [title, setTitle] = useState('');
+  const [desq, setDesq] = useState('');
   const [quizStatus, setQuizStatus] = useState(true);
   const [questionsList, setQuestionsList] = useState([]);
-  const [questionStatement, setQuestionStatement] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [questionStatement, setQuestionStatement] = useState('');
+  const [answer, setAnswer] = useState('');
   const [answersList, setAnswersList] = useState([]);
   const params = useParams();
-  const [question, setQuestion] = useState({
-    questionStatement: "",
-    answers: [],
-  });
-  const [errorMsg, setErrorMsg] = useState("");
+
+  const [errorMsg, setErrorMsg] = useState('');
 
   const addAnswerToList = (e) => {
     e.preventDefault();
@@ -39,12 +36,12 @@ function QuizCreationPage() {
       answerStatement: answer,
     };
     answersList.push(newAnswer);
-    setAnswer("");
+    setAnswer('');
   };
 
   const addQuestionToList = (e) => {
     e.preventDefault();
-    setErrorMsg("");
+    setErrorMsg('');
     if (answersList.length >= 2) {
       const newQuestion = {
         questionStatement: questionStatement,
@@ -52,11 +49,11 @@ function QuizCreationPage() {
       };
       questionsList.push(newQuestion);
       console.log(questionsList);
-      setQuestionStatement("");
-      setAnswer("");
+      setQuestionStatement('');
+      setAnswer('');
       setAnswersList([]);
     } else {
-      setErrorMsg("The question can not have less than two answers");
+      setErrorMsg('The question can not have less than two answers');
     }
   };
 
@@ -78,24 +75,20 @@ function QuizCreationPage() {
       await axios
         .post(baseURL + params.id, quiz)
         .then(function (response) {
-          setErrorMsg("Quiz saved");
+          setErrorMsg('Quiz saved');
           console.log(response);
-          setAnswer("");
+          setAnswer('');
           setAnswersList([]);
-          setDesq("");
-          setQuestion({
-            questionStatement: "",
-            answers: [],
-          });
-          setQuestionStatement("");
-          setTitle("");
+          setDesq('');
+          setQuestionStatement('');
+          setTitle('');
           setQuestionsList([]);
         })
         .catch(function (error) {
-          setErrorMsg("something  went wrong");
+          setErrorMsg('something  went wrong');
         });
     } else {
-      setErrorMsg("The quiz can not have less than two questions");
+      setErrorMsg('The quiz can not have less than two questions');
     }
   };
 
@@ -130,8 +123,8 @@ function QuizCreationPage() {
           >
             <div className="page-title">Create your quiz</div>
             <Link
-              to={"/profile/" + params.id}
-              style={{ color: "inherit", textDecoration: "inherit" }}
+              to={'/profile/' + params.id}
+              style={{ color: 'inherit', textDecoration: 'inherit' }}
             >
               <Button variant="outlined">Back to profile</Button>
             </Link>
@@ -177,7 +170,7 @@ function QuizCreationPage() {
             <Paper className="sm-sections">
               <Stack direction="column" spacing={4} className="small-section">
                 <div>
-                  {errorMsg === "Quiz saved" ? (
+                  {errorMsg === 'Quiz saved' ? (
                     <Alert variant="filled" severity="success">
                       {errorMsg}
                     </Alert>
@@ -266,7 +259,7 @@ function QuizCreationPage() {
             </Paper>
             <Stack direction="column" spacing={2} className="small-section">
               <Button onClick={saveQuiz} variant="contained">
-                {" "}
+                {' '}
                 Save Quiz
               </Button>
             </Stack>
